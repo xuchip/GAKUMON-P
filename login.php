@@ -58,7 +58,7 @@
 
                     // ✅ Redirect based on role
                     if ($user['role'] === 'Kanri') {
-                        header("Location: kanriDashboard.php");
+                        header("Location: admin_dashboard.php");
                         exit;
                     } elseif ($user['role'] === 'Gakusensei') {
                         header("Location: homepage.php");
