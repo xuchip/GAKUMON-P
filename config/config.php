@@ -17,22 +17,4 @@
         exit();
     }
 
-    function logAdminAction($connection, $userId, $action, $targetType, $targetId) {
-    $stmt = $connection->prepare("
-        INSERT INTO tbl_admin_audit_logs (user_id, action, target_type, target_id)
-        VALUES (?, ?, ?, ?)
-    ");
-    $stmt->bind_param("issi", $userId, $action, $targetType, $targetId);
-    $ok = $stmt->execute();
-
-    if (!$ok) {
-        error_log("Audit log failed: " . $stmt->error);
-    } else {
-        error_log("Audit log success for user_id {$userId}");
-    }
-
-    $stmt->close();
-}
-
-
 ?>

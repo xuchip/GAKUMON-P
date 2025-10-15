@@ -151,7 +151,7 @@ include 'include/desktopKanriNav.php';
             </div>
 
             <!-- KPI Statistics Grid -->
-            <div class="stats-grid">
+            <div class="stats-grid" id="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon users">
                         <i class="fas fa-users"></i>
@@ -385,9 +385,13 @@ include 'include/desktopKanriNav.php';
                         </tbody>
                     </table>
                     <div class="pagination-controls">
+                        <?php
+                        $total_users = $connection->query("SELECT COUNT(*) as count FROM tbl_user")->fetch_assoc()['count'];
+                        $total_user_pages = ceil($total_users / 10);
+                        ?>
                         <button onclick="loadUserPage(<?php echo max(1, $user_page - 1); ?>)" <?php echo $user_page <= 1 ? 'disabled' : ''; ?>>Previous</button>
-                        <span>Page <?php echo $user_page; ?></span>
-                        <button onclick="loadUserPage(<?php echo $user_page + 1; ?>)">Next</button>
+                        <span>Page <?php echo $user_page; ?> of <?php echo $total_user_pages; ?></span>
+                        <button onclick="loadUserPage(<?php echo $user_page + 1; ?>)" <?php echo $user_page >= $total_user_pages ? 'disabled' : ''; ?>>Next</button>
                     </div>
                 </div>
             </section>
@@ -482,9 +486,13 @@ include 'include/desktopKanriNav.php';
                         </tbody>
                     </table>
                     <div class="pagination-controls">
+                        <?php
+                        $total_lessons = $connection->query("SELECT COUNT(*) as count FROM tbl_lesson")->fetch_assoc()['count'];
+                        $total_lesson_pages = ceil($total_lessons / 10);
+                        ?>
                         <button onclick="loadLessonPage(<?php echo max(1, $page - 1); ?>)" <?php echo $page <= 1 ? 'disabled' : ''; ?>>Previous</button>
-                        <span>Page <?php echo $page; ?></span>
-                        <button onclick="loadLessonPage(<?php echo $page + 1; ?>)">Next</button>
+                        <span>Page <?php echo $page; ?> of <?php echo $total_lesson_pages; ?></span>
+                        <button onclick="loadLessonPage(<?php echo $page + 1; ?>)" <?php echo $page >= $total_lesson_pages ? 'disabled' : ''; ?>>Next</button>
                     </div>
                 </div>
             </section>
@@ -927,9 +935,13 @@ include 'include/desktopKanriNav.php';
                             </tbody>
                         </table>
                         <div class="pagination-controls">
+                            <?php
+                            $total_inventory = $connection->query("SELECT COUNT(*) as count FROM tbl_user")->fetch_assoc()['count'];
+                            $total_inv_pages = ceil($total_inventory / 10);
+                            ?>
                             <button onclick="loadInventoryPage(<?php echo max(1, $inv_page - 1); ?>)" <?php echo $inv_page <= 1 ? 'disabled' : ''; ?>>Previous</button>
-                            <span>Page <?php echo $inv_page; ?></span>
-                            <button onclick="loadInventoryPage(<?php echo $inv_page + 1; ?>)">Next</button>
+                            <span>Page <?php echo $inv_page; ?> of <?php echo $total_inv_pages; ?></span>
+                            <button onclick="loadInventoryPage(<?php echo $inv_page + 1; ?>)" <?php echo $inv_page >= $total_inv_pages ? 'disabled' : ''; ?>>Next</button>
                         </div>
                     </div>
                 </div>
@@ -2307,6 +2319,70 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(err => alert('Error: ' + err.message));
     });
 });
+
+// Navbar scroll highlighting
+function updateNavbarHighlight() {
+    const sections = [
+        { id: 'stats-grid', navText: 'Dashboard' },
+        { id: 'user-management', navText: 'Account Management' },
+        { id: 'lesson-management', navText: 'Materials Moderation' },
+        { id: 'quiz-management', navText: 'Materials Moderation' },
+        { id: 'creator-management', navText: 'Gakusensei Verification' },
+        { id: 'shop-management', navText: 'Pet Customization' },
+        { id: 'system-management', navText: 'Activity Logs' }
+    ];
+    
+    let currentSection = 'Dashboard';
+    const scrollPosition = window.scrollY + 100;
+    
+    // Find current section based on scroll position
+    for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i].id) || document.querySelector('.' + sections[i].id);
+        if (element && element.offsetTop <= scrollPosition) {
+            currentSection = sections[i].navText;
+            break;
+        }
+    }
+    
+    // Remove active class from all nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active', 'scroll-active');
+    });
+    
+    // Add active class to current section
+    document.querySelectorAll('.nav-item').forEach(item => {
+        const navText = item.querySelector('.nav-text')?.textContent;
+        if (navText === currentSection) {
+            item.classList.add('scroll-active');
+        }
+    });
+}
+
+// Add scroll event listener
+window.addEventListener('scroll', updateNavbarHighlight);
+
+// Initial call
+updateNavbarHighlight();
 </script>
+
+<style>
+/* Scroll-based navbar highlighting */
+.nav-item.scroll-active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-left: 3px solid #fff !important;
+    color: #fff !important;
+}
+
+.nav-item.scroll-active .nav-text {
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+.nav-item:hover,
+.nav-item.scroll-active {
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+</style>
 
 <?php include 'include/kanriFooter.php'; ?>
