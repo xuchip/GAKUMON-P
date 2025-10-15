@@ -12,15 +12,6 @@
   <?php if(isset($pageCSS)): ?>
     <link rel="stylesheet" href="<?= htmlspecialchars($pageCSS) ?>">
   <?php endif; ?>
-  <?php if(isset($kanriCSS)): ?>
-    <link rel="stylesheet" href="<?= htmlspecialchars($kanriCSS) ?>">
-  <?php endif; ?>
-  <?php if(isset($kanriCSS2)): ?>
-    <link rel="stylesheet" href="<?= htmlspecialchars($kanriCSS2) ?>">
-  <?php endif; ?>
-  <?php if(isset($kanriNavCSS)): ?>
-    <link rel="stylesheet" href="<?= htmlspecialchars($kanriNavCSS) ?>">
-  <?php endif; ?>
 
 </head>
 <body class="d-flex flex-column min-vh-100">

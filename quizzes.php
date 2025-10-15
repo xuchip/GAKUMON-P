@@ -599,6 +599,30 @@
     </div>
 </div>
 
+<!-- Subscribe Modal -->
+<div class="custom-modal" id="subscribeModal">
+    <div class="custom-modal-backdrop"></div>
+    <div class="custom-modal-dialog">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+            </div>
+            <div class="custom-modal-body">
+                <div class="modal-lesson-content">
+                    <h6> Number of Quiz Creation Limit Already Reached! Subscribe to Gakumon to create more lessons! </h6>
+            <div class="submitButton custom-modal-footer-input">
+               <a href="subscription.php"><button type="button" class="btnSubmit btn btn-primary">Subscribe Now!</button></a>
+               <button type="button" class="exitButton btn btn-secondary" onclick="closeSubscribeModal(this)">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  // Set this if your include path differs on this page
+  window.LIMITS_ENDPOINT = '/GAKUMON/include/creationLimits.inc.php';
+</script>
+
 <script>
    window.loggedInUsername = <?php echo json_encode($_SESSION['sUser'] ?? 'GakuLesson'); ?>;
    

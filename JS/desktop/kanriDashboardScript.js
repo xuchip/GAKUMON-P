@@ -1,317 +1,220 @@
-// Mobile device detection and redirection
-function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-function redirectToIndex() {
-    window.location.href = 'index.php';
-}
-
-// Initialize dashboard when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Show mobile warning if on mobile device
-    if (isMobileDevice()) {
-        document.querySelector('.mobile-warning-modal').style.display = 'flex';
-    }
-    
-    // Initialize charts
-    initializeCharts();
-    
-    // Initialize management sections
-    initializeManagementSections();
-    
-    // Setup event listeners
-    setupEventListeners();
+// Toggle dropdown visibility
+document.getElementById("accountDropdownBtn").addEventListener("click", function (e) {
+	e.stopPropagation();
+	const dropdown = document.getElementById("accountDropdown");
+	dropdown.classList.toggle("show");
 });
 
-// Chart initialization
-function initializeCharts() {
-    // Destroy existing charts if they exist
-    if (window.userGrowthChart) {
-        window.userGrowthChart.destroy();
-    }
-    if (window.topLessonsChart) {
-        window.topLessonsChart.destroy();
-    }
-    
-    // User Growth Chart
-    const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
-    window.userGrowthChart = new Chart(userGrowthCtx, {
-        type: 'line',
-        data: {
-            labels: [], // Will be populated from PHP data
-            datasets: [{
-                label: 'New Users',
-                data: [],
-                borderColor: '#811212',
-                backgroundColor: 'rgba(129, 18, 18, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawBorder: false
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        }
-    });
+// Close dropdown when clicking outside
+document.addEventListener("click", function (e) {
+	const dropdown = document.getElementById("accountDropdown");
+	const accountBtn = document.getElementById("accountDropdownBtn");
+	if (!dropdown.contains(e.target) && e.target !== accountBtn && !accountBtn.contains(e.target)) {
+		dropdown.classList.remove("show");
+	}
+});
 
-    // Top Lessons Chart
-    const topLessonsCtx = document.getElementById('topLessonsChart').getContext('2d');
-    window.topLessonsChart = new Chart(topLessonsCtx, {
-        type: 'bar',
-        data: {
-            labels: [], // Will be populated from PHP data
-            datasets: [{
-                label: 'Enrollments',
-                data: [],
-                backgroundColor: '#4299e1',
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    grid: {
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        }
-    });
+// ACCOUNT MANAGEMENT
 
-    // Load chart data via AJAX
-    loadChartData(window.userGrowthChart, window.topLessonsChart);
+// Open delete confirmation modal
+function openDeleteModal(userId) {
+	document.getElementById("deleteUserId").value = userId;
+	var deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+	deleteModal.show();
 }
 
-// Load chart data from server
-function loadChartData(userGrowthChart, topLessonsChart) {
-    fetch('admin_ajax.php?action=get_chart_data')
-        .then(response => response.json())
-        .then(data => {
-            // Update User Growth Chart
-            userGrowthChart.data.labels = data.user_growth.labels;
-            userGrowthChart.data.datasets[0].data = data.user_growth.data;
-            userGrowthChart.update();
-            
-            // Update Top Lessons Chart
-            topLessonsChart.data.labels = data.top_lessons.labels;
-            topLessonsChart.data.datasets[0].data = data.top_lessons.data;
-            topLessonsChart.update();
-        })
-        .catch(error => console.error('Error loading chart data:', error));
+// Open edit modal with user data
+function openEditModal(button) {
+	document.getElementById("editUserId").value = button.dataset.userId;
+	document.getElementById("editFirstName").value = button.dataset.firstName;
+	document.getElementById("editLastName").value = button.dataset.lastName;
+	document.getElementById("editUsername").value = button.dataset.username;
+	document.getElementById("editEmail").value = button.dataset.email;
+	document.getElementById("editRole").value = button.dataset.role;
+
+	var editModal = new bootstrap.Modal(document.getElementById("editModal"));
+	editModal.show();
 }
 
-// Management sections functionality
-function initializeManagementSections() {
-    // Load initial data for each management section
-    loadUserManagementData();
-    loadLessonManagementData();
-    loadQuizManagementData();
+// Handle delete confirmation
+function confirmDelete(userId) {
+	fetch("delete_user.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+		body: `user_id=${userId}`,
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.success) {
+				location.reload();
+			} else {
+				alert("Error: " + data.message);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("An error occurred while deleting the user.");
+		});
 }
 
-function setupEventListeners() {
-    // Analytics period filter
-    document.getElementById('analyticsPeriod').addEventListener('change', function() {
-        updateAnalyticsData(this.value);
-    });
-    
-    // Search functionality
-    document.querySelectorAll('.search-input').forEach(input => {
-        input.addEventListener('input', function() {
-            filterTable(this);
-        });
-    });
+// Handle edit save
+function saveEdit(userId) {
+	const formData = new FormData(document.getElementById(`editForm${userId}`));
+
+	fetch("update_user.php", {
+		method: "POST",
+		body: formData,
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.success) {
+				location.reload();
+			} else {
+				alert("Error: " + data.message);
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("An error occurred while updating the user.");
+		});
 }
 
-function updateAnalyticsData(period) {
-    // Show loading state
-    document.querySelectorAll('.chart-content').forEach(chart => {
-        chart.innerHTML = '<div class="loading">Loading data...</div>';
-    });
-    
-    // Reload charts with new period
-    setTimeout(() => {
-        initializeCharts();
-    }, 500);
-}
+// APPLICATION MODAL
 
-// Table filtering
-function filterTable(input) {
-    const filter = input.value.toLowerCase();
-    const table = input.closest('.management-section').querySelector('table');
-    const rows = table.querySelectorAll('tbody tr');
-    
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? '' : 'none';
-    });
-}
+document.addEventListener("DOMContentLoaded", function () {
+	// Get the apply button and modal
+	const applyButton = document.querySelector(".cta-button");
+	const applicationModal = document.getElementById("gakusenseiModal");
 
-// User Management Functions
-function loadUserManagementData() {
-    fetch('admin_ajax.php?action=get_users')
-        .then(response => response.json())
-        .then(data => {
-            updateUserTable(data);
-        })
-        .catch(error => console.error('Error loading user data:', error));
-}
+	// Add click event to open modal
+	if (applyButton && applicationModal) {
+		applyButton.addEventListener("click", function () {
+			applicationModal.classList.add("active");
+			document.body.style.overflow = "hidden"; // Prevent scrolling
+		});
+	}
 
-function updateUserTable(users) {
-    const tbody = document.querySelector('#userTable tbody');
-    tbody.innerHTML = users.map(user => `
-        <tr>
-            <td>${user.user_id}</td>
-            <td>${user.username}</td>
-            <td>${user.email_address}</td>
-            <td>${user.role}</td>
-            <td>${user.subscription_type}</td>
-            <td>${user.gakucoins}</td>
-            <td>
-                <button class="btn-action btn-edit" onclick="editUser(${user.user_id})">Edit</button>
-                <button class="btn-action btn-delete" onclick="deleteUser(${user.user_id})">Delete</button>
-            </td>
-        </tr>
-    `).join('');
-}
+	// Close modal functionality
+	const closeButtons = document.querySelectorAll(".custom-modal-close, .custom-modal-backdrop");
+	closeButtons.forEach((button) => {
+		button.addEventListener("click", function () {
+			applicationModal.classList.remove("active");
+			document.body.style.overflow = ""; // Re-enable scrolling
+		});
+	});
 
+	// Prevent modal content click from closing modal
+	const modalContent = document.querySelector(".custom-modal-content");
+	if (modalContent) {
+		modalContent.addEventListener("click", function (e) {
+			e.stopPropagation();
+		});
+	}
+});
 
+document.addEventListener("DOMContentLoaded", function () {
+	// Get elements
+	const applicationModal = document.getElementById("gakusenseiModal");
+	const applicationForm = document.querySelector('form[name="gakusenseiApplication"]');
+	const submitBtn = document.getElementById("submitApplicationBtn");
+	const closeButtons = document.querySelectorAll(".custom-modal-close, .custom-modal-close-btn, .custom-modal-backdrop");
+	const toastEl = document.getElementById("applicationToast");
+	const toast = new bootstrap.Toast(toastEl, { delay: 5000 });
 
+	// Close modal function
+	function closeModal() {
+		applicationModal.classList.remove("active");
+		document.body.style.overflow = "";
+	}
 
+	// Close modal when clicking close buttons or backdrop
+	closeButtons.forEach((button) => {
+		button.addEventListener("click", closeModal);
+	});
 
-// Lesson Management Functions
-function loadLessonManagementData() {
-    fetch('admin_ajax.php?action=get_lessons')
-        .then(response => response.json())
-        .then(data => {
-            updateLessonTable(data);
-        })
-        .catch(error => console.error('Error loading lesson data:', error));
-}
+	// Form submission handler
+	if (applicationForm) {
+		applicationForm.addEventListener("submit", function (e) {
+			e.preventDefault();
 
-function updateLessonTable(lessons) {
-    const tbody = document.querySelector('#lessonTable tbody');
-    tbody.innerHTML = lessons.map(lesson => `
-        <tr>
-            <td>${lesson.lesson_id}</td>
-            <td>${lesson.title}</td>
-            <td>${lesson.topic_name}</td>
-            <td>${lesson.difficulty_level}</td>
-            <td>${lesson.is_private ? 'Private' : 'Public'}</td>
-            <td>
-                <button class="btn-action btn-edit" onclick="editLesson(${lesson.lesson_id})">Edit</button>
-                <button class="btn-action btn-delete" onclick="deleteLesson(${lesson.lesson_id})">Delete</button>
-            </td>
-        </tr>
-    `).join('');
-}
+			// Change button to "Application Pending"
+			const originalText = submitBtn.textContent;
+			submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Application Pending...';
+			submitBtn.disabled = true;
 
-function editLesson(lessonId) {
-    console.log('Edit lesson:', lessonId);
-    // Implementation for lesson edit modal
-}
+			// Simulate form submission (replace with actual AJAX call)
+			setTimeout(() => {
+				// Close modal
+				closeModal();
 
-function deleteLesson(lessonId) {
-    if (confirm('Are you sure you want to delete this lesson?')) {
-        fetch('admin_ajax.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `action=delete_lesson&lesson_id=${lessonId}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                loadLessonManagementData();
-                showNotification('Lesson deleted successfully', 'success');
-            } else {
-                showNotification('Error deleting lesson: ' + data.message, 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showNotification('Error deleting lesson', 'error');
-        });
-    }
-}
+				// Show success toast
+				toast.show();
 
-// Notification system
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
-        </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        if (notification.parentElement) {
-            notification.remove();
-        }
-    }, 5000);
-}
+				// Reset button after a delay
+				setTimeout(() => {
+					submitBtn.textContent = originalText;
+					submitBtn.disabled = false;
+				}, 2000);
 
-// Export functionality
-function exportTableData(tableId, filename) {
-    const table = document.getElementById(tableId);
-    const rows = table.querySelectorAll('tr');
-    let csv = [];
-    
-    for (let i = 0; i < rows.length; i++) {
-        let row = [], cols = rows[i].querySelectorAll('td, th');
-        
-        for (let j = 0; j < cols.length; j++) {
-            row.push(cols[j].innerText);
-        }
-        
-        csv.push(row.join(','));
-    }
-    
-    // Download CSV file
-    const csvFile = new Blob([csv.join('\n')], {type: 'text/csv'});
-    const downloadLink = document.createElement('a');
-    downloadLink.download = filename;
-    downloadLink.href = window.URL.createObjectURL(csvFile);
-    downloadLink.style.display = 'none';
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-}
+				console.log("Form would be submitted here");
+			}, 1500); // Simulate processing time
+		});
+	}
+
+	// Prevent modal content click from closing modal
+	const modalContent = document.querySelector(".custom-modal-content");
+	if (modalContent) {
+		modalContent.addEventListener("click", function (e) {
+			e.stopPropagation();
+		});
+	}
+
+	// PET CUSTOMIZATION
+
+	// Handle pet item delete confirmation
+	function confirmDeletePet(itemId) {
+		fetch("delete_pet_item.php", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			body: `item_id=${itemId}`,
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					location.reload();
+				} else {
+					alert("Error: " + data.message);
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				alert("An error occurred while deleting the item.");
+			});
+	}
+
+	// Handle pet item edit save
+	function savePetEdit(itemId) {
+		const formData = new FormData(document.getElementById(`editPetForm${itemId}`));
+
+		fetch("update_pet_item.php", {
+			method: "POST",
+			body: formData,
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					location.reload();
+				} else {
+					alert("Error: " + data.message);
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				alert("An error occurred while updating the item.");
+			});
+	}
+});

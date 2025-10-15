@@ -636,29 +636,65 @@ function closeEnrollmentSuccessModal() {
     }
 }
 
-// === Enrollment save helper ===
+// === Enrollment save helper (patched to open Subscribe Modal on premium-required) ===
 async function saveEnrollment(lessonId) {
-    const form = new FormData();
-    form.append('lesson_id', lessonId);
+  const form = new FormData();
+  form.append('lesson_id', lessonId);
 
-    try {
-        const res = await fetch('include/enrollLesson.inc.php', {
-            method: 'POST',
-            body: form,
-            credentials: 'same-origin'
-        });
-        const data = await res.json();
-        if (!res.ok || !data.ok) {
-            throw new Error(data.error || 'Enroll failed');
+  try {
+    const res = await fetch('include/enrollLesson.inc.php', {
+      method: 'POST',
+      body: form,
+      credentials: 'same-origin'
+    });
+
+    // Try parsing JSON, but don't crash if server sent no/invalid JSON
+    let data = null;
+    try { data = await res.json(); } catch {}
+
+    // Blocked by server (e.g., Free user trying to enroll in Gakusensei lesson)
+    if (!res.ok || !data?.ok) {
+      const apiMsg = (data && (data.error || data.message)) ? String(data.error || data.message) : '';
+
+      // If server says premium/subscription required (or 403), show Subscribe Modal instead of alert
+      if (res.status === 403 || /premium|subscribe/i.test(apiMsg)) {
+        if (typeof window.openSubscribeModal === 'function') {
+          window.openSubscribeModal();
+        } else {
+          // Fallback if modal helpers didn’t load for any reason
+          alert(apiMsg || 'Premium subscription required for this lesson.');
         }
-        console.log('Enrollment saved:', lessonId);
-        return true;
-    } catch (err) {
-        console.error('Enrollment error:', err);
-        alert('Could not enroll. Please try again.');
         return false;
+      }
+
+      // Other kinds of errors: fall back to the generic error flow
+      throw new Error(apiMsg || 'Enroll failed');
     }
+
+    // Success
+    console.log('Enrollment saved:', lessonId);
+    return true;
+
+  } catch (err) {
+    console.error('Enrollment error:', err);
+    const msg = (err && err.message) ? String(err.message) : '';
+
+    // If the thrown error mentions premium/subscribe, route to modal as well
+    if (/premium|subscribe/i.test(msg)) {
+      if (typeof window.openSubscribeModal === 'function') {
+        window.openSubscribeModal();
+      } else {
+        alert(msg);
+      }
+      return false;
+    }
+
+    // Generic fallback
+    alert('Could not enroll. Please try again.');
+    return false;
+  }
 }
+
 
 // Function to open materials modal
 function openMaterialsModal(lesson, materialType) {
@@ -853,3 +889,59 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+/* ============================================================
+   [APPEND-ONLY] Redirect specific alert(...) messages to
+   the Subscribe Modal on mobile.
+   Matches your markup (#subscribeModal + .custom-modal-backdrop).
+   ============================================================ */
+
+/* Modal helpers aligned to your HTML (only define if missing) */
+if (typeof window.openSubscribeModal !== 'function') {
+  window.openSubscribeModal = function () {
+    const modal = document.getElementById('subscribeModal');
+    if (!modal) { console.warn('[subscribe] #subscribeModal not found'); return; }
+    // Support both class- and style-based show logic
+    modal.classList.add('active', 'show');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    const backdrop = modal.querySelector('.custom-modal-backdrop');
+    if (backdrop) {
+      const onBackdrop = (e) => { if (e.target === e.currentTarget) window.closeSubscribeModal(); };
+      backdrop.addEventListener('click', onBackdrop, { once: true });
+    }
+  };
+}
+if (typeof window.closeSubscribeModal !== 'function') {
+  window.closeSubscribeModal = function (/*btn*/) {
+    const modal = document.getElementById('subscribeModal');
+    if (!modal) return;
+    modal.classList.remove('active', 'show');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+}
+
+/* Intercept alert(...) and show the modal for premium/subscribe messages */
+(function () {
+  const nativeAlert = window.alert;
+  window.alert = function (...args) {
+    const msg = (args[0] ?? '').toString();
+
+    // Match the messages you showed in the logs / common variants.
+    const shouldOpenModal =
+      /premium subscription required/i.test(msg) ||
+      /subscribe/i.test(msg) ||
+      /limit.*(reached|exceeded)/i.test(msg) ||
+      /gakusensei/i.test(msg);
+
+    if (shouldOpenModal && document.getElementById('subscribeModal')) {
+      // Show your Subscribe Modal instead of the browser alert
+      try { window.openSubscribeModal(); return; } catch (_) {}
+    }
+
+    // Fallback to the original alert for other messages
+    return nativeAlert.apply(window, args);
+  };
+})();

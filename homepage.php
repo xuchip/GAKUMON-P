@@ -664,24 +664,21 @@
         </div>
     </div>
 </div>
-<!-- Premium Required Modal -->
-<div class="custom-modal" id="premiumRequiredModal">
+
+<!-- Subscribe Modal -->
+<div class="custom-modal" id="subscribeModal">
     <div class="custom-modal-backdrop"></div>
     <div class="custom-modal-dialog">
         <div class="custom-modal-content">
+            <div class="custom-modal-header">
+            </div>
             <div class="custom-modal-body">
                 <div class="modal-lesson-content">
-                    <div class="enrollment-prompt">
-                        <div class="alertTitle text-center">Premium Required</div>
-                        <p class="alertCaption text-center mb-4">
-                            This lesson requires a Premium subscription to enroll.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="submitButton custom-modal-footer">
-                <button type="button" class="btnSubmit btn btn-primary" id="avail-premium-btn">Avail Premium</button>
-                <button type="button" class="exitButton btn btn-secondary" id="premium-cancel-btn">Cancel</button>
+                    <h6> Number of Lesson Creation Limit Already Reached! Subscribe to Gakumon to create more lessons! </h6>
+            <div class="submitButton custom-modal-footer-input">
+               <a href="subscription.php"><button type="button" class="btnSubmit btn btn-primary">Subscribe Now!</button></a>
+               <button type="button" class="exitButton btn btn-secondary" onclick="closeSubscribeModal(this)">Cancel</button>
+
             </div>
         </div>
     </div>

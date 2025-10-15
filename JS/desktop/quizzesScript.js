@@ -90,6 +90,85 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// ---------- Subscribe modal helpers (safe if already defined elsewhere) ----------
+if (typeof openSubscribeModal !== 'function') {
+  function openSubscribeModal() {
+    const modal = document.getElementById('subscribeModal');
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    const backdrop = modal.querySelector('.custom-modal-backdrop');
+    if (backdrop) {
+      const onClick = (e) => { if (e.target === backdrop) closeSubscribeModal(); };
+      backdrop.addEventListener('click', onClick, { once: true });
+    }
+  }
+}
+if (typeof closeSubscribeModal !== 'function') {
+  function closeSubscribeModal() {
+    const modal = document.getElementById('subscribeModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// Wire X/Cancel buttons if present
+document.addEventListener('DOMContentLoaded', () => {
+  const x = document.getElementById('subscribeXBtn');
+  const c = document.getElementById('subscribeCancelBtn');
+  if (x) x.addEventListener('click', closeSubscribeModal);
+  if (c) c.addEventListener('click', closeSubscribeModal);
+});
+
+// ---------- Limit precheck for quiz creation ----------
+async function canCreateAnotherQuiz() {
+  const url = (typeof window.LIMITS_ENDPOINT === 'string' && window.LIMITS_ENDPOINT)
+    ? window.LIMITS_ENDPOINT
+    : '/GAKUMON/include/creationLimits.inc.php';
+
+  try {
+    const res = await fetch(`${url}?check=quiz`, { credentials: 'same-origin', cache: 'no-store' });
+    if (!res.ok) {
+      console.warn('Limits check HTTP not ok:', res.status);
+      return false; // FAIL-CLOSED
+    }
+    const data = await res.json();
+    if (!data || data.ok === false) {
+      console.warn('Limits check bad payload:', data);
+      return false; // FAIL-CLOSED
+    }
+    return data.allowed !== false; // only deny when explicitly false
+  } catch (err) {
+    console.warn('Quiz limit check failed:', err);
+    return false; // FAIL-CLOSED
+  }
+}
+
+
+// ---------- Hook Add Quiz trigger(s) ----------
+document.addEventListener('DOMContentLoaded', () => {
+  // Support both an ID or a class, depending on your markup
+  const triggers = [
+    ...document.querySelectorAll('#addQuizBtn, .addQuizBtn')
+  ];
+
+  triggers.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const allowed = await canCreateAnotherQuiz();
+      if (allowed) {
+        window.location.href = 'createQuiz.php';
+      } else {
+        openSubscribeModal();
+      }
+    });
+  });
+});
+
+
+
 // Enable horizontal scrolling with mouse wheel for tabs
 document.addEventListener('DOMContentLoaded', function() {
     const tabsScroll = document.querySelector('.tabs-scroll');
@@ -168,13 +247,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check for enrolled lessons on page load
     checkEnrolledLessons();
 
-    // For add quiz btn
+    // For add quiz btn (limit-aware)
     const addQuizBtn = document.getElementById('addQuizBtn');
     if (addQuizBtn) {
-        addQuizBtn.addEventListener('click', () => {
-        window.location.href = 'createQuiz.php';
-        });
+    addQuizBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const allowed = await canCreateAnotherQuiz();
+        if (allowed) {
+        window.location.href = 'createQuiz.php'; // unchanged path
+        } else {
+        openSubscribeModal(); // show the same Subscribe modal
+        }
+    });
     }
+
 });
 
 
@@ -755,6 +841,29 @@ document.addEventListener('click', function (e) {
   }
   // nothing else to do – the link was set in openMaterialsModal for the current lesson
 });
+
+document.addEventListener('click', function (e) {
+  const t = e.target.closest('#addQuizBtn, .addQuizBtn, a[href*="createQuiz.php"]');
+  if (!t) return;
+
+  // Block default nav EARLY (capture handled below)
+  e.preventDefault();
+  e.stopPropagation();
+
+  (async () => {
+    const allowed = await canCreateAnotherQuiz();
+    if (allowed) {
+      window.location.href = 'createQuiz.php';
+    } else {
+      if (typeof openSubscribeModal === 'function') {
+        openSubscribeModal();
+      } else {
+        console.warn('openSubscribeModal() missing; check modal markup/JS load order.');
+      }
+    }
+  })();
+}, true); // <-- capture = true so we beat other handlers
+
 
 // 🧩 FINAL OVERRIDE: force orphan quizzes to redirect instead of showing modal
 document.addEventListener("DOMContentLoaded", () => {

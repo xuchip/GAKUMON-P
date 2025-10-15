@@ -872,3 +872,124 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove the backdrop click event listener (modal won't close when clicking outside)
     }
 });
+
+/* ============================================================
+   ENROLLMENT GUARD (Homepage) — Free Gakusei vs Gakusensei lessons
+   Append-only. Does not modify existing lines; overrides by re-assigning.
+   ============================================================ */
+
+/* ——— Safe Subscribe Modal helpers (no-ops if already defined) ——— */
+if (typeof openSubscribeModal !== 'function') {
+  function openSubscribeModal() {
+    const m = document.getElementById('subscribeModal');
+    if (!m) { console.warn('subscribeModal not found'); return; }
+    m.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const backdrop = m.querySelector('.custom-modal-backdrop');
+    if (backdrop) {
+      const onClick = (e) => { if (e.target === backdrop) closeSubscribeModal(); };
+      backdrop.addEventListener('click', onClick, { once: true });
+    }
+  }
+}
+if (typeof closeSubscribeModal !== 'function') {
+  function closeSubscribeModal() {
+    const m = document.getElementById('subscribeModal');
+    if (!m) return;
+    m.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+/* Wire X and Cancel if present (id-based, safe if missing) */
+document.addEventListener('DOMContentLoaded', () => {
+  const x = document.getElementById('subscribeXBtn');
+  const c = document.getElementById('subscribeCancelBtn');
+  if (x) x.addEventListener('click', closeSubscribeModal);
+  if (c) c.addEventListener('click', closeSubscribeModal);
+});
+
+/* ——— Utils to detect roles robustly ——— */
+function userIsFreeGakusei() {
+  const role = (window.currentUserRole || '').trim();
+  const v = window.isUserPremium;
+  const isPremium = (v === true) || (v === 1) || (v === '1') || (String(v).toLowerCase() === 'true');
+  return role === 'Gakusei' && !isPremium;
+}
+
+function lessonCreatedByGakusensei(lesson) {
+  if (!lesson || typeof lesson !== 'object') return false;
+
+  // Accept multiple possible field names to avoid touching PHP
+  const probe = v => (typeof v === 'string' ? v.trim().toLowerCase() : null);
+  const roles = [
+    probe(lesson.author_role),
+    probe(lesson.authorRole),
+    probe(lesson.author_type),
+    probe(lesson.authorType),
+    probe(lesson.created_by_role),
+    probe(lesson.creator_role),
+    probe(lesson.creatorRole),
+  ];
+
+  if (lesson.author_is_gakusensei === true) return true;
+  if (lesson.author_is_gakusensei === false) return false;
+
+  return roles.includes('gakusensei');
+}
+
+function mustSubscribeForLesson(lesson) {
+  try {
+    return userIsFreeGakusei() && lessonCreatedByGakusensei(lesson);
+  } catch {
+    return false;
+  }
+}
+
+/* ——— Override the gate used by the Start Lesson button ———
+   Your existing code calls requiresPremiumSubscription(lesson)
+   and then showPremiumRequiredModal(). We reuse those hooks.
+*/
+if (typeof window.requiresPremiumSubscription === 'function') {
+  window.requiresPremiumSubscription = function(lesson) {
+    return mustSubscribeForLesson(lesson);
+  };
+}
+
+/* ——— Ensure the "premium" modal call actually opens Subscribe modal ——— */
+(function () {
+  const origShowPremium = (typeof window.showPremiumRequiredModal === 'function')
+    ? window.showPremiumRequiredModal
+    : null;
+
+  window.showPremiumRequiredModal = function() {
+    // Prefer Subscribe modal if present, fallback to original else
+    if (document.getElementById('subscribeModal')) {
+      openSubscribeModal();
+    } else if (origShowPremium) {
+      origShowPremium();
+    } else {
+      console.warn('No subscribe/premium modal available.');
+    }
+  };
+})();
+
+/* ——— Intercept actual enrollment confirm (enroll button in your prompt) ———
+   If the lesson requires subscription, show the Subscribe Modal and stop.
+*/
+(function () {
+  const origConfirm = (typeof window.confirmEnrollment === 'function')
+    ? window.confirmEnrollment
+    : null;
+
+  if (origConfirm) {
+    window.confirmEnrollment = async function () {
+      const lesson = window.currentLesson || null; // set by your code when opening prompt
+      if (lesson && mustSubscribeForLesson(lesson)) {
+        openSubscribeModal();
+        return; // block enrollment
+      }
+      return await origConfirm.apply(this, arguments);
+    };
+  }
+})();

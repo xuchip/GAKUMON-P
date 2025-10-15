@@ -97,3 +97,58 @@ function cm_check_creation_limit(mysqli $connection, int $userId, string $type, 
 
     return ['allowed' => true, 'remaining' => $remaining];
 }
+
+// --- Direct-access JSON endpoint (safe: only runs when this file is the entry script) ---
+if (basename(__FILE__) === basename($_SERVER['SCRIPT_FILENAME'])) {
+    // bootstrap
+    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+    require_once __DIR__ . '/../config/config.php';
+    header('Content-Type: application/json; charset=utf-8');
+
+    // Resolve current user
+    if (!function_exists('cm_resolve_user_id') || !function_exists('cm_check_creation_limit')) {
+        echo json_encode(['ok' => false, 'error' => 'limit_helpers_missing']);
+        exit;
+    }
+    $uid = cm_resolve_user_id($connection);
+    if (!$uid) {
+        echo json_encode(['ok' => false, 'allowed' => false, 'remaining' => 0, 'reason' => 'not_logged_in']);
+        exit;
+    }
+
+    // Which type to check?
+    $check = strtolower(trim($_GET['check'] ?? ($_GET['type'] ?? 'lesson')));
+    $valid = ['lesson','quiz','both'];
+    if (!in_array($check, $valid, true)) $check = 'lesson';
+
+    // (Optional) per-type free limits. Adjust if you need different caps.
+    $FREE_LIMITS = ['lesson' => 2, 'quiz' => 2];
+
+    // Helper to check one type
+    $doCheck = function(string $type) use ($connection, $uid, $FREE_LIMITS) {
+        $limit = $FREE_LIMITS[$type] ?? 2;
+        // Expected to return: ['allowed'=>bool,'remaining'=>int,'is_premium'=>bool] (your helper can add more)
+        $res = cm_check_creation_limit($connection, $uid, $type, $limit);
+        // Normalize keys so the front-end is stable even if helper changes
+        return [
+            'type'       => $type,
+            'allowed'    => (bool)($res['allowed'] ?? false),
+            'remaining'  => (int)($res['remaining'] ?? 0),
+            'is_premium' => isset($res['is_premium']) ? (bool)$res['is_premium'] : null,
+            'debug'      => isset($res['debug']) ? $res['debug'] : null, // non-breaking
+        ];
+    };
+
+    if ($check === 'both') {
+        echo json_encode([
+            'ok'     => true,
+            'lesson' => $doCheck('lesson'),
+            'quiz'   => $doCheck('quiz'),
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    $single = $doCheck($check);
+    echo json_encode(['ok' => true] + $single, JSON_UNESCAPED_UNICODE);
+    exit;
+}

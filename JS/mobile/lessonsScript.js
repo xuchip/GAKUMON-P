@@ -156,13 +156,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add Lesson button functionality - UPDATED
+    // Add Lesson button: pre-check creation limits
     const addLessonBtn = document.querySelector('.addlLessonBtn');
     if (addLessonBtn) {
-        addLessonBtn.addEventListener('click', function() {
-            openAddLessonModal();
-        });
+    addLessonBtn.addEventListener('click', async function (e) {
+        e.preventDefault();
+        const allowed = await canCreateAnotherLesson();
+        if (allowed) {
+        openAddLessonModal();
+        } else {
+        openSubscribeModal();
+        }
+    });
     }
+
 
     // Initialize topic selection
     initTopicSelection();
@@ -203,6 +210,48 @@ function initTopicSelection() {
         });
     }
 }
+
+async function canCreateAnotherLesson() {
+  try {
+    // Use your site root; absUrl works too, but a direct path is fine
+    const res = await fetch('/GAKUMON/include/creationLimits.inc.php?check=lesson', {
+      credentials: 'same-origin',
+      cache: 'no-store'
+    });
+    if (!res.ok) return true; // fail-open (don’t block users due to a network hiccup)
+    const data = await res.json();
+    // Back-end returns { ok, allowed, remaining, reason? }
+    if (data && data.ok !== false && data.allowed === false) return false;
+    return true;
+  } catch (err) {
+    console.warn('Creation limit check failed:', err);
+    return true; // fail-open on errors
+  }
+}
+
+
+// --- Subscribe Modal helpers ---
+function openSubscribeModal() {
+  const modal = document.getElementById('subscribeModal');
+  if (!modal) return;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  const backdrop = modal.querySelector('.custom-modal-backdrop');
+  if (backdrop) {
+    // Close on backdrop click
+    const onClick = (e) => { if (e.target === backdrop) closeSubscribeModal(); };
+    backdrop.addEventListener('click', onClick, { once: true });
+  }
+}
+
+function closeSubscribeModal() {
+  const modal = document.getElementById('subscribeModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
 
 // Add Lesson Modal Functions
 function openAddLessonModal() {

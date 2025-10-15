@@ -58,10 +58,12 @@ SELECT
   item_name AS name,
   price,
   image_url AS icon,
+  accessory_image_url,
   energy_restore
 FROM tbl_shop_items
 ORDER BY item_id
 ";
+
 if ($res = $connection->query($sql)) {
     while ($row = $res->fetch_assoc()) {
         // Coerce numeric fields
@@ -139,11 +141,11 @@ if ($userId) {
             $inventory[] = [
                 'id'             => (int)$row['item_id'],
                 'name'           => $row['name'],
-                'type'           => $type,                 // 'food'
+                'type'           => $type,
                 'price'          => (int)$row['price'],
                 'icon'           => $row['icon'],
                 'energy_restore' => (int)$row['energy_restore'],
-                'owned'          => (int)$row['quantity'], // quantity matters for foods
+                'owned'          => (int)$row['quantity'],
                 'equipped'       => false,
             ];
         }
@@ -158,11 +160,13 @@ if ($userId) {
             COALESCE(si.item_name, '')        AS name,
             COALESCE(si.item_type, 'accessory') AS item_type,
             COALESCE(si.image_url, '')        AS icon,
+            COALESCE(si.accessory_image_url, '') AS accessory_image_url,
             COALESCE(si.price, 0)             AS price
         FROM tbl_user_accessories a
         JOIN tbl_shop_items si ON si.item_id = a.item_id
         WHERE a.user_id = ?
     ";
+
     if ($stmt = $connection->prepare($sqlAcc)) {
         $stmt->bind_param("i", $userId);
         $stmt->execute();
@@ -175,11 +179,12 @@ if ($userId) {
             $inventory[] = [
                 'id'             => (int)$row['item_id'],
                 'name'           => $row['name'],
-                'type'           => $type,          // 'accessories'
+                'type'           => $type,
                 'price'          => (int)$row['price'],
                 'icon'           => $row['icon'],
+                'accessory_image_url' => $row['accessory_image_url'],
                 'energy_restore' => null,
-                'owned'          => 1,              // own once
+                'owned'          => 1,
                 'equipped'       => (bool)$row['is_equipped'],
             ];
         }
@@ -194,7 +199,6 @@ include 'include/header.php';
 // Get user data if needed
 if (isset($_SESSION['sUser'])) {
     $username = $_SESSION['sUser'];
-    // You can fetch user-specific pet data from database here
 }
 
 /* ---- Expose server data to JS (for gakumonScript.js) ---- */
@@ -358,9 +362,6 @@ $serverData = [
                     <button class="category-tab" data-category="accessories">
                         <img src="IMG/GameAssets/2.png" alt="Accessories" class="tab-icon">
                     </button>
-                    <!-- <button class="category-tab" data-category="decorations">
-                        <img src="IMG/GameAssets/3.png" alt="Decorations" class="tab-icon">
-                    </button> -->
                 </div>
 
                 <!-- Scrollable Items Area -->
@@ -391,9 +392,6 @@ $serverData = [
             <button class="shop-category-tab" data-shop-category="accessories">
                 <img src="IMG/GameAssets/2.png" alt="Accessories" class="shop-tab-icon">
             </button>
-            <!-- <button class="shop-category-tab" data-shop-category="decorations">
-                <img src="IMG/GameAssets/3.png" alt="Decorations" class="shop-tab-icon">
-            </button> -->
         </div>
 
         <div class="shop-items-grid" id="shopItemsGrid">
@@ -422,19 +420,16 @@ $serverData = [
         
         // Play click sound on any click
         document.addEventListener('click', function(event) {
-            // Optional: Don't play sound if clicking on specific elements
             if (event.target.closest('.no-click-sound')) {
                 return;
             }
             
-            // Reset and play click sound
             clickSound.currentTime = 0;
             clickSound.play().catch(error => {
                 console.log('Click sound failed:', error);
             });
         });
         
-        // Optional: Try to start background music on first click
         const bgMusic = document.getElementById('pageLoadSound');
         let musicStarted = false;
         
@@ -447,7 +442,6 @@ $serverData = [
                 }).catch(error => {
                     console.log('Background music failed:', error);
                 });
-                // Remove listener after first attempt
                 document.removeEventListener('click', startMusicOnce);
             }
         });

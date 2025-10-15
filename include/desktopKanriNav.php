@@ -12,6 +12,7 @@
     $activePetCustomization = '';
     $activeActivityLogs = '';
     $activeGakusenseiVerification = '';
+    $activeGakusenseiPayout = '';
 
     // Set active class based on current page
     switch($currentPage) {
@@ -41,6 +42,9 @@
             break;
         case 'gakusensei_verification.php':
             $activeGakusenseiVerification = 'active';
+            break;
+        case 'gakusenseiPayout.php':
+            $activeGakusenseiPayout = 'active';
             break;
     }
 ?>
@@ -80,6 +84,9 @@
         <a href="gakusensei_verification.php" class="nav-item <?php echo $activeGakusenseiVerification; ?>">
             <span class="nav-text">Gakusensei Verification</span>
         </a>
+        <a href="gakusenseiPayout.php" class="nav-item <?php echo $activeGakusenseiPayout; ?>">
+            <span class="nav-text">Gakusensei Payout</span>
+        </a>
     </div>
 
      <!-- Account Section with Dropdown -->
@@ -104,17 +111,17 @@
             
             <div class="dropdown-divider"></div>
             
-            <a href="faqs.php" class="dropdown-item">
+            <!-- <a href="faqs.php" class="dropdown-item">
                 <i class="bi bi-question-circle"></i>
                 <span>FAQs</span>
-            </a>
+            </a> -->
             
             <div class="dropdown-divider"></div>
             
-            <a href="contactUs.php" class="dropdown-item">
+            <!-- <a href="contactUs.php" class="dropdown-item">
                 <i class="bi bi-envelope"></i>
                 <span>Contact Us</span>
-            </a>
+            </a> -->
             
             <div class="dropdown-divider"></div>
             

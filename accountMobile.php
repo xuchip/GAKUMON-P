@@ -116,17 +116,17 @@ if ($isMobile) {
         
         <!-- Body -->
         <div class="account-mobile-body">
-            <a href="faqs.php" class="account-mobile-item">
+            <!-- <a href="faqs.php" class="account-mobile-item">
                 <i class="bi bi-question-circle"></i>
                 <span>FAQs</span>
                 <i class="bi bi-chevron-right"></i>
-            </a>
+            </a> -->
             
-            <a href="contactUs.php" class="account-mobile-item">
+            <!-- <a href="contactUs.php" class="account-mobile-item">
                 <i class="bi bi-envelope"></i>
                 <span>Contact Us</span>
                 <i class="bi bi-chevron-right"></i>
-            </a>
+            </a> -->
             
             <?php if (!isset($_SESSION['sUserRole']) || $_SESSION['sUserRole'] !== 'Gakusensei'): ?>
                 <a href="gakusensei.php" class="account-mobile-item">

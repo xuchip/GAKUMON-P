@@ -3,9 +3,6 @@
   // local (file-scoped) only, no global collision
   const isMobile = (window.__GAK_IS_MOBILE__ ?? (window.innerWidth <= 768));
 
-// // Mobile detection
-// const isMobile = window.innerWidth <= 768;
-
 // Touch-optimized post function
 async function postForm(url, data) {
   const form = new FormData();
@@ -78,6 +75,7 @@ async function refreshStateFromServer() {
             type: normalizeType(item.type),
             price: Number(item.price ?? 0),
             icon: item.icon ?? '',
+            accessory_image_url: item.accessory_image_url,
             energy_restore: item.energy_restore !== null && item.energy_restore !== undefined
               ? Number(item.energy_restore) : null,
             owned: Number(item.owned ?? 1),
@@ -105,7 +103,6 @@ function normalizeType(t) {
   return t; // 'food', 'toys', etc.
 }
 
-// TRY Game Data
 // Build data from PHP
 const shopItemsFromServer = Array.isArray(window.serverData?.shopItems) ? window.serverData.shopItems : [];
 const petFromServer = window.serverData?.pet;
@@ -133,6 +130,7 @@ const gameData = {
     type: normalizeType(i.type),
     price: Number(i.price ?? 0),
     icon: i.icon ?? '',
+    accessory_image_url: i.accessory_image_url,
     energy_restore: i.energy_restore !== null && i.energy_restore !== undefined
         ? Number(i.energy_restore) : null,
     owned: Number(i.owned ?? 1),
@@ -143,27 +141,12 @@ const gameData = {
     shopItems: shopItemsFromServer.map(i => ({
     id: Number(i.id),
     name: i.name,
-    type: normalizeType(i.type),           // <-- important
+    type: normalizeType(i.type),
     price: Number(i.price),
     icon: i.icon,
+    accessory_image_url: i.accessory_image_url,
     energy_restore: i.energy_restore !== null ? Number(i.energy_restore) : null
     }))
-};
-
-// Accessory image mapping
-const accessoryImages = {
-    "Cool Hat": "IMG/Accessories/hat.png",
-    "Sun Glasses": "IMG/Accessories/glasses.png", 
-    "Magic Collar": "IMG/Accessories/collar.png",
-    "Rainbow Wings": "IMG/Accessories/wings.png"
-};
-
-// Accessory layer order (what shows on top of what)
-const accessoryLayerOrder = {
-    "collar": 1,    // Bottom layer
-    "glasses": 2,   // Middle layer  
-    "hat": 3,       // Top layer
-    "wings": 4      // Very top layer
 };
 
 // DOM Elements
@@ -300,24 +283,43 @@ function updateAccessoryDisplay() {
         item.type === 'accessories' && item.equipped
     );
     
-    // Sort accessories by layer order (so they stack correctly)
-    equippedAccessories.sort((a, b) => {
-        const layerA = accessoryLayerOrder[a.layer] || 0;
-        const layerB = accessoryLayerOrder[b.layer] || 0;
-        return layerA - layerB;
-    });
+    if (equippedAccessories.length === 0) {
+        return;
+    }
+    
+    // Get the user's ACTUAL current pet name from server data
+    const currentPetName = window.serverData.pet.type; // This gets the actual equipped pet
     
     // Create and append accessory layers
-    equippedAccessories.forEach(accessory => {
+    equippedAccessories.forEach((accessory, index) => {
         const accessoryLayer = document.createElement('img');
-        accessoryLayer.className = `accessory-layer accessory-${accessory.layer}`;
-        accessoryLayer.src = accessory.image || accessoryImages[accessory.name];
+        accessoryLayer.className = `accessory-layer`;
+        
+        // BUILD DYNAMIC PATH: IMG/Accessories/(UserPetName)/(accessory_file)
+        const dynamicPath = `IMG/Accessories/${currentPetName}/${accessory.accessory_image_url}`;
+        accessoryLayer.src = dynamicPath;
         accessoryLayer.alt = accessory.name;
         accessoryLayer.title = accessory.name;
         
-        // Set z-index based on layer order
-        const layerOrder = accessoryLayerOrder[accessory.layer] || 0;
-        accessoryLayer.style.zIndex = 10 + layerOrder;
+        // Style to cover entire pet area
+        accessoryLayer.style.width = '100%';
+        accessoryLayer.style.height = '100%';
+        accessoryLayer.style.objectFit = 'contain';
+        accessoryLayer.style.position = 'absolute';
+        accessoryLayer.style.top = '0';
+        accessoryLayer.style.left = '0';
+        accessoryLayer.style.pointerEvents = 'none';
+        
+        // Simple z-index stacking
+        accessoryLayer.style.zIndex = 10 + index;
+        
+        // Add error handling for image loading
+        accessoryLayer.onerror = function() {
+            console.error('❌ Failed to load pet-specific accessory:', this.src);
+            // Fallback to generic accessory if pet-specific doesn't exist
+            const fallbackPath = `IMG/Accessories/${accessory.accessory_image_url}`;
+            this.src = fallbackPath;
+        };
         
         accessoryLayers.appendChild(accessoryLayer);
     });
@@ -549,27 +551,6 @@ function attachBuyButtonListeners() {
             }
         }
     });
-}
-
-// Toggle equip/unequip for accessories and decorations
-function toggleEquipItem(itemId) {
-    const item = gameData.inventory.find(i => i.id === itemId);
-    if (!item || item.owned === 0) return;
-
-    // For now, just toggle the equipped state
-    item.equipped = !item.equipped;
-    
-    // Update equipped items in pet data
-    if (item.equipped) {
-        if (!gameData.pet.equipped[item.type].includes(itemId)) {
-            gameData.pet.equipped[item.type].push(itemId);
-        }
-    } else {
-        gameData.pet.equipped[item.type] = gameData.pet.equipped[item.type].filter(id => id !== itemId);
-    }
-
-    renderInventoryItems();
-    showEquipFeedback(item.name, item.equipped);
 }
 
 // Use food item - UPDATED TO REMOVE FOOD WHEN COUNT REACHES 0

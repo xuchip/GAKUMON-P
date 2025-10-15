@@ -170,10 +170,11 @@
 
             <!-- GAKUSENSEI DASHBOARD -->
 <!-- GAKUSENSEI DASHBOARD -->
+<!-- GAKUSENSEI DASHBOARD -->
 <?php if (isset($_SESSION['sUserRole']) && $_SESSION['sUserRole'] === 'Gakusensei'): 
     
-    // Fetch real data from database but maintain the same structure
-    // 1. Total Students
+    // Fetch real data from database
+    // 1. Total Students (unique students enrolled in creator's lessons)
     $studentStmt = $connection->prepare("
         SELECT COUNT(DISTINCT ue.user_id) as total_students 
         FROM tbl_user_enrollments ue 
@@ -198,7 +199,7 @@
     $lessonsCreated = $lessonResult->fetch_assoc()['lessons_created'] ?? 0;
     $lessonStmt->close();
     
-    // 3. Total Daily Enrollments
+    // 3. Total Daily Enrollments (enrollments in the last 24 hours)
     $enrollmentStmt = $connection->prepare("
         SELECT COUNT(*) as total_enrollments
         FROM tbl_user_enrollments ue
@@ -212,35 +213,33 @@
     $totalEnrollments = $enrollmentResult->fetch_assoc()['total_enrollments'] ?? 0;
     $enrollmentStmt->close();
     
-    // 4. Gakucoins Earned
-    $coinsStmt = $connection->prepare("
-        SELECT gakucoins as gakucoins_earned 
-        FROM tbl_user 
+    // 4. Revenue Earned - Get from tbl_creator_earnings (sum of earned_amount for this user)
+    $revenueStmt = $connection->prepare("
+        SELECT COALESCE(SUM(earned_amount), 0) as total_revenue_earned
+        FROM tbl_creator_earnings 
         WHERE user_id = ?
     ");
-    $coinsStmt->bind_param("i", $userID);
-    $coinsStmt->execute();
-    $coinsResult = $coinsStmt->get_result();
-    $gakucoinsEarned = $coinsResult->fetch_assoc()['gakucoins_earned'] ?? 0;
-    $coinsStmt->close();
+    $revenueStmt->bind_param("i", $userID);
+    $revenueStmt->execute();
+    $revenueResult = $revenueStmt->get_result();
+    $revenueEarned = $revenueResult->fetch_assoc()['total_revenue_earned'] ?? 0;
+    $revenueStmt->close();
     
-    // // 5. Monthly Earnings
-    // $monthlyStmt = $connection->prepare("
-    //     SELECT COALESCE(SUM(uqa.gakucoins_earned), 0) as monthly_earnings 
-    //     FROM tbl_user_quiz_attempts uqa 
-    //     INNER JOIN tbl_quizzes q ON uqa.quiz_id = q.quiz_id 
-    //     INNER JOIN tbl_lesson l ON q.lesson_id = l.lesson_id 
-    //     WHERE l.author_id = ? 
-    //     AND MONTH(uqa.attempted_at) = MONTH(CURRENT_DATE())
-    //     AND YEAR(uqa.attempted_at) = YEAR(CURRENT_DATE())
-    // ");
-    // $monthlyStmt->bind_param("i", $userID);
-    // $monthlyStmt->execute();
-    // $monthlyResult = $monthlyStmt->get_result();
-    // $monthlyEarnings = $monthlyResult->fetch_assoc()['monthly_earnings'] ?? 0;
-    // $monthlyStmt->close();
+    // 5. Monthly Earnings (earnings from the current month)
+    $monthlyStmt = $connection->prepare("
+        SELECT COALESCE(SUM(earned_amount), 0) as monthly_earnings 
+        FROM tbl_creator_earnings 
+        WHERE user_id = ? 
+        AND MONTH(recorded_at) = MONTH(CURRENT_DATE())
+        AND YEAR(recorded_at) = YEAR(CURRENT_DATE())
+    ");
+    $monthlyStmt->bind_param("i", $userID);
+    $monthlyStmt->execute();
+    $monthlyResult = $monthlyStmt->get_result();
+    $monthlyEarnings = $monthlyResult->fetch_assoc()['monthly_earnings'] ?? 0;
+    $monthlyStmt->close();
     
-    // 6. Completion Rate
+    // 6. Completion Rate (average quiz completion rate for creator's lessons)
     $completionStmt = $connection->prepare("
         SELECT 
             COALESCE(
@@ -263,94 +262,7 @@
     $completionRate = round($completionResult->fetch_assoc()['avg_completion_rate'] ?? 78);
     $completionStmt->close();
     
-    // // 7. Student Satisfaction (placeholder calculation)
-    // $satisfactionRate = min(100, $completionRate + 14);
-    
-    // // 8. Content Quality (placeholder calculation)
-    // $contentQuality = round(($completionRate + $satisfactionRate) / 2);
-
-    // 7. Revenue Earned
-    $revenue = 0;
-
-    // ₱1.50 per enrollment in Gakusensei's lessons
-    $enrollRevenueStmt = $connection->prepare("
-        SELECT COUNT(DISTINCT ue.user_id, ue.lesson_id) AS enroll_count
-        FROM tbl_user_enrollments ue
-        INNER JOIN tbl_lesson l ON ue.lesson_id = l.lesson_id
-        WHERE l.author_id = ?
-    ");
-    $enrollRevenueStmt->bind_param("i", $userID);
-    $enrollRevenueStmt->execute();
-    $enrollResult = $enrollRevenueStmt->get_result();
-    $enrollCount = $enrollResult->fetch_assoc()['enroll_count'] ?? 0;
-    $enrollRevenueStmt->close();
-
-    $revenue += $enrollCount * 1;
-
-    // ₱3.00 per student who got 100% once
-    $quizRevenueStmt = $connection->prepare("
-        SELECT COUNT(DISTINCT uqa.user_id, q.quiz_id) AS perfect_quizzes
-        FROM tbl_user_quiz_attempts uqa
-        INNER JOIN tbl_quizzes q ON uqa.quiz_id = q.quiz_id
-        INNER JOIN tbl_lesson l ON q.lesson_id = l.lesson_id
-        WHERE l.author_id = ?
-        AND uqa.score = (SELECT COUNT(*) FROM tbl_questions qq WHERE qq.quiz_id = q.quiz_id)
-    ");
-    $quizRevenueStmt->bind_param("i", $userID);
-    $quizRevenueStmt->execute();
-    $quizResult = $quizRevenueStmt->get_result();
-    $perfectCount = $quizResult->fetch_assoc()['perfect_quizzes'] ?? 0;
-    $quizRevenueStmt->close();
-
-    $revenue += $perfectCount * 3.00;
-
-    // No rounding — use raw float value
-    $revenueEarned = $revenue;
-
-    // 8. Monthly Earnings (past 30 days)
-    $monthlyRevenue = 0;
-
-    // ₱1.50 per enrollment in last 30 days
-    $monthlyEnrollStmt = $connection->prepare("
-        SELECT COUNT(DISTINCT ue.user_id, ue.lesson_id) AS enroll_count
-        FROM tbl_user_enrollments ue
-        INNER JOIN tbl_lesson l ON ue.lesson_id = l.lesson_id
-        WHERE l.author_id = ?
-        AND ue.enrolled_at >= NOW() - INTERVAL 30 DAY
-    ");
-    $monthlyEnrollStmt->bind_param("i", $userID);
-    $monthlyEnrollStmt->execute();
-    $monthlyEnrollResult = $monthlyEnrollStmt->get_result();
-    $monthlyEnrollCount = $monthlyEnrollResult->fetch_assoc()['enroll_count'] ?? 0;
-    $monthlyEnrollStmt->close();
-
-    $monthlyRevenue += $monthlyEnrollCount * 1;
-
-    // ₱3.00 per perfect quiz (past 30 days, first time only)
-    $monthlyQuizStmt = $connection->prepare("
-        SELECT COUNT(DISTINCT uqa.user_id, q.quiz_id) AS perfect_quizzes
-        FROM tbl_user_quiz_attempts uqa
-        INNER JOIN tbl_quizzes q ON uqa.quiz_id = q.quiz_id
-        INNER JOIN tbl_lesson l ON q.lesson_id = l.lesson_id
-        WHERE l.author_id = ?
-        AND uqa.score = (SELECT COUNT(*) FROM tbl_questions qq WHERE qq.quiz_id = q.quiz_id)
-        AND uqa.attempted_at >= NOW() - INTERVAL 30 DAY
-    ");
-    $monthlyQuizStmt->bind_param("i", $userID);
-    $monthlyQuizStmt->execute();
-    $monthlyQuizResult = $monthlyQuizStmt->get_result();
-    $monthlyPerfectCount = $monthlyQuizResult->fetch_assoc()['perfect_quizzes'] ?? 0;
-    $monthlyQuizStmt->close();
-
-    $monthlyRevenue += $monthlyPerfectCount * 3.00;
-
-    // Keep exact float value (no rounding)
-    $monthlyEarnings = $monthlyRevenue;
-
-
-
-    
-    // Next payout date
+    // Next payout date (15th of next month)
     $nextPayout = date('M j, Y', strtotime('first day of next month +14 days'));
 ?>
     <div class="gakusensei-dashboard">
@@ -374,13 +286,13 @@
             <div class="stat-card">
                 <div class="stat-content">
                     <h3><?php echo number_format($totalEnrollments); ?></h3>
-                    <p>Total Daily Enrollments</p>
+                    <p>Daily Enrollments</p>
                 </div>
             </div>
             
             <div class="stat-card">
                 <div class="stat-content">
-                    <h3 id="revenueEarned"><?php echo number_format($revenueEarned); ?></h3>
+                    <h3>₱<?php echo number_format($revenueEarned, 2); ?></h3>
                     <p>Revenue Earned</p>
                 </div>
             </div>
@@ -394,20 +306,6 @@
                     <div class="progress-bar" style="width: <?php echo $completionRate; ?>%"><?php echo $completionRate; ?>%</div>
                 </div>
             </div>
-            
-            <!-- <div class="metric-bar">
-                <span class="metric-label">Student Satisfaction</span>
-                <div class="progress">
-                    <div class="progress-bar" style="width: <?php echo $satisfactionRate; ?>%"><?php echo $satisfactionRate; ?>%</div>
-                </div>
-            </div> -->
-            
-            <!-- <div class="metric-bar">
-                <span class="metric-label">Content Quality</span>
-                <div class="progress">
-                    <div class="progress-bar" style="width: <?php echo $contentQuality; ?>%"><?php echo $contentQuality; ?>%</div>
-                </div>
-            </div> -->
         </div>
         
         <div class="revenue-section">
@@ -415,11 +313,11 @@
             <div class="revenue-stats">
                 <div class="revenue-item">
                     <span>This Month:</span>
-                    <span class="revenue-amount"><?php echo number_format($monthlyEarnings); ?> Php</span>
+                    <span class="revenue-amount">₱<?php echo number_format($monthlyEarnings, 2); ?></span>
                 </div>
                 <div class="revenue-item">
                     <span>All Time:</span>
-                    <span class="revenue-amount"><?php echo number_format($revenueEarned); ?> Php</span>
+                    <span class="revenue-amount">₱<?php echo number_format($revenueEarned, 2); ?></span>
                 </div>
                 <div class="revenue-item">
                     <span>Next Payout:</span>

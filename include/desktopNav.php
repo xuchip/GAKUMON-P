@@ -73,19 +73,19 @@
                 <span>Settings</span>
             </a> -->
             
-            <div class="dropdown-divider"></div>
+            <!-- <div class="dropdown-divider"></div> -->
             
-            <a href="faqs.php" class="dropdown-item">
+            <!-- <a href="faqs.php" class="dropdown-item">
                 <i class="bi bi-question-circle"></i>
                 <span>FAQs</span>
-            </a>
+            </a> -->
             
-            <div class="dropdown-divider"></div>
+            <!-- <div class="dropdown-divider"></div> -->
             
-            <a href="contactUs.php" class="dropdown-item">
+            <!-- <a href="contactUs.php" class="dropdown-item">
                 <i class="bi bi-envelope"></i>
                 <span>Contact Us</span>
-            </a>
+            </a> -->
             
             <div class="dropdown-divider"></div>
             

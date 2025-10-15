@@ -1016,3 +1016,101 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.closest('.tab, [role="tab"], .tabs button')) setTimeout(kick, 0);
   });
 })();
+
+/* ============================================================
+   [APPEND-ONLY] Mobile: block quiz creation for Free users
+   when at/over limit — show Subscribe Modal instead.
+   ============================================================ */
+
+/* Endpoint (use your existing include path) */
+window.LIMITS_ENDPOINT = window.LIMITS_ENDPOINT || '/GAKUMON/include/creationLimits.inc.php';
+
+/* Safe Subscribe Modal helpers (only define if missing) */
+if (typeof openSubscribeModal !== 'function') {
+  function openSubscribeModal() {
+    const m = document.getElementById('subscribeModal');
+    if (!m) { console.warn('[limits] #subscribeModal not found'); return; }
+    m.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const backdrop = m.querySelector('.custom-modal-backdrop');
+    if (backdrop) {
+      const onClick = (e) => { if (e.target === backdrop) closeSubscribeModal(); };
+      backdrop.addEventListener('click', onClick, { once: true });
+    }
+  }
+}
+if (typeof closeSubscribeModal !== 'function') {
+  function closeSubscribeModal() {
+    const m = document.getElementById('subscribeModal');
+    if (!m) return;
+    m.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+/* Wire X / Cancel once (safe if the buttons aren’t present) */
+document.addEventListener('DOMContentLoaded', () => {
+  const x = document.getElementById('subscribeXBtn');
+  const c = document.getElementById('subscribeCancelBtn');
+  if (x) x.addEventListener('click', closeSubscribeModal);
+  if (c) c.addEventListener('click', closeSubscribeModal);
+}, { once: true });
+
+/* Fail-CLOSED checker — if anything’s wrong, we block navigation */
+async function canCreateAnotherQuiz() {
+  try {
+    const res = await fetch(`${window.LIMITS_ENDPOINT}?check=quiz`, {
+      credentials: 'same-origin',
+      cache: 'no-store'
+    });
+    if (!res.ok) {
+      console.warn('[limits] HTTP', res.status);
+      return false; // fail-closed
+    }
+    const data = await res.json();
+    if (!data || data.ok === false) {
+      console.warn('[limits] bad payload', data);
+      return false; // fail-closed
+    }
+    // Allow only when NOT explicitly denied
+    return data.allowed !== false;
+  } catch (err) {
+    console.warn('[limits] fetch failed', err);
+    return false; // fail-closed
+  }
+}
+
+/* Capture-phase interceptor: catches ALL create-quiz triggers
+   - #addQuizBtn
+   - .addQuizBtn
+   - any <a> whose href contains "createQuiz.php"
+*/
+document.addEventListener('click', function (e) {
+  const t = e.target.closest('#addQuizBtn, .addQuizBtn, a[href*="createQuiz.php"]');
+  if (!t) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  (async () => {
+    const allowed = await canCreateAnotherQuiz();
+    if (allowed) {
+      window.location.href = 'createQuiz.php';
+    } else {
+      if (document.getElementById('subscribeModal')) {
+        openSubscribeModal();
+      } else {
+        console.warn('[limits] subscribe modal missing on this page');
+      }
+    }
+  })();
+}, true); // capture=true so we beat inline handlers/other listeners
+
+/* Optional: if server-side guard bounces back with ?showSubscribe=1, auto-open modal */
+document.addEventListener('DOMContentLoaded', () => {
+  const q = new URLSearchParams(location.search);
+  if (q.get('showSubscribe') === '1' && typeof openSubscribeModal === 'function') {
+    openSubscribeModal();
+  }
+}, { once: true });
+
