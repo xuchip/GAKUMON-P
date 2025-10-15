@@ -1,1 +1,13 @@
 config.php
+
+config.php
+kanri/*
+adminDashboardScript.js
+adminManagementScript.js
+adminPagination.js
+adminManagementStyle.css
+kanriDashboardStyle.css
+kanriDBStyle.css
+admin_ajax.php
+admin_dashboard.php
+kanriDashboard.php
