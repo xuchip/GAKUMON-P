@@ -1,0 +1,2069 @@
+/* Desktop CSS for index,php */
+
+@font-face {
+    font-family: 'SFpro_regular';
+    src: url('../fonts/sf-pro-text-regular.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_bold';
+    src: url('../fonts/SF-Pro-Display-Black.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_thin';
+    src: url('../fonts/SF-Pro-Display-Thin.ttf');
+}
+
+/* ===== THREE-COLUMN LAYOUT ===== */
+.main-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Left Navigation Column */
+.side-navbar {
+    background-color: #811212;
+    width: 250px;
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+/* Middle Content Column */
+.content-area {
+    flex: 1;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    overflow-y: auto; /* Only this section scrolls */
+}
+
+/* Right Pet Panel Column */
+.pet-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 30%;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* [OFFICIAL] Navigation Bar Style */
+/* ===== MOBILE BOTTOM NAVIGATION ===== */
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #811212;
+    padding: 8px 0px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border-top: 3px solid #6a0e0e;
+}
+
+.mobile-nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end; /* Align items to bottom */
+    height: 100%;
+    position: relative;
+    gap: 5px;
+    margin: 0px 12px;
+}
+
+.mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 80px;
+    margin-bottom: 0;
+}
+
+.mobile-nav-item .bi {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-text {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.mobile-nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.mobile-nav-item.active .bi,
+.mobile-nav-item.active .mobile-nav-text {
+    color: #fff;
+}
+
+.mobile-nav-item:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-account-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* ===== PET DOME IN NAV BAR ===== */
+.mobile-pet-dome-nav {
+    position: relative;
+    flex: 1;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.pet-dome-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #811212, #a83232);
+    border: 4px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background-image: url('../../IMG/GameAssets/Untitled\ design.png'); /* IMAGE BACKGROUND */
+    background-size: cover; /* Or 'contain' depending on your preference */
+}
+
+.pet-dome-link:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pet-dome-image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain; /* Prevents stretching - image maintains aspect ratio */
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    background: transparent; /* Remove any background color */
+}
+
+.pet-dome-link:active .pet-dome-image {
+    transform: scale(1.1);
+}
+
+/* Alternative: If you want the image to cover the circle without distortion */
+.pet-dome-image.cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Covers the circle without stretching, may crop edges */
+    border-radius: 50%;
+}
+
+/* Alternative: If you want the image to fit entirely inside the circle */
+.pet-dome-image.contain {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Fits entire image inside circle, may have empty space */
+    border-radius: 50%;
+    background: transparent;
+}
+
+/* Pulse animation for the pet dome */
+@keyframes dome-pulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.pet-dome-link {
+    animation: dome-pulse 3s infinite;
+}
+
+/* ===== MOBILE ACCOUNT MODAL ===== */
+.mobile-account-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.mobile-account-modal.show {
+    display: block;
+}
+
+.mobile-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobile-modal-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    animation: slideUp 0.3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.mobile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background-color: #811212;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+
+.mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-user-icon {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.mobile-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-user-email {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.mobile-user-username {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+}
+
+.mobile-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-modal-body {
+    padding: 20px;
+}
+
+.mobile-modal-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.mobile-modal-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-modal-item .bi {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    color: #811212;
+    width: 24px;
+    text-align: center;
+}
+
+.mobile-modal-item span {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mobile-modal-item.premium-item .bi {
+    color: #ffd700;
+}
+
+.mobile-modal-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Mobile GakuCoins Display */
+.mobile-gakucoins-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF;
+    color: #b47a2e;
+    border: 3px solid #ece9de;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    gap: 8px;
+}
+
+.mobile-gakucoins-display .bi {
+    color: #b47a2e;
+    margin-right: 0;
+}
+
+.mobile-modal-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.mobile-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    background-color: #811212;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-logout-btn .bi {
+    margin-right: 10px;
+    color: white;
+}
+
+.mobile-logout-btn:hover {
+    background-color: #6a0e0e;
+    color: white;
+}
+
+/* ===== MAIN CONTENT ADJUSTMENT FOR MOBILE NAV ===== */
+.mobile-main-layout {
+    padding-bottom: 70px; /* Space for bottom nav */
+}
+
+.mobile-content-area {
+    width: 100%;
+    margin: 0 !important;
+    padding: 15px;
+    min-height: calc(100vh - 70px);
+}
+
+/* Hide desktop-specific elements on mobile */
+.side-navbar,
+.pet-panel,
+.gakucoins-display {
+    display: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== CONTENT AREA STYLES ===== */
+.content-area {
+    flex: 1;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    overflow-y: auto; /* Only this section scrolls */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    position: relative; 
+}
+
+/* Welcome Page */
+.welcome-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Or a fixed height if needed */
+}
+
+.quiz-container {
+    height: 100vh !important;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 350px;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.lesson-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-top: 0;
+    color: #000;
+    border-bottom: 1px solid #000;
+    padding: 0px 20px 5px;
+}
+
+.lesson-description {
+    font-size: 14px;
+    color: #000;
+    font-family: 'SFpro_regular', sans-serif;
+    text-transform: uppercase;
+}
+
+.submitButton {
+    margin-top: 1.8rem;
+    display: flex;
+    justify-content: center;
+}
+
+.btnSubmit {
+    width: 30rem !important;
+    border-radius: 100px !important;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+    color: white !important;
+}
+
+.btnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+.exitButton.btn-back {
+    margin-left: auto; /* This pushes the button to the right */
+}
+
+.exitButton {
+    padding: 10px 50px !important;
+    background: #ffff !important;
+    border-radius: 20px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px!important;
+    border: 1px solid #e9ecef !important;
+    color: #811212 !important;
+    border: 1px solid #811212 !important;
+    font-family: 'SFpro_regular', sans-serif !important;
+    border-radius: 100px !important;
+}
+
+.exitButton:hover {
+    background: #811212 !important;
+    color: white !important;
+}
+
+.add-slide-btn, .action-btn {
+    padding: 12px 50px !important;
+    background: #ffff !important;
+    border-radius: 20px !important;
+    margin-right: 10px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px!important;
+    border: 1px solid #e9ecef !important;
+    color: #811212 !important;
+    border: 1px solid #811212 !important;
+    font-family: 'SFpro_regular', sans-serif !important;
+    border-radius: 100px !important;
+}
+
+.add-slide-btn, .action-btn:hover {
+    background: #811212 !important;
+    color: white !important;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Question Container */
+.question-container {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.question-text {
+    font-size: 55px;
+    height: 300px;
+    width: 100%;
+    font-family: 'SFpro_bold', sans-serif;
+    margin-bottom: 40px;
+    color: #333;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+    padding: 50px;
+    line-height: 1;
+    /* Add these properties for vertical centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* Add some padding to prevent text from touching edges */
+}
+
+.question-number {
+    font-size: 14px;
+    color: #811212;
+    text-transform: uppercase;
+    padding: 10px 0 10px 0;
+}
+
+/* Options Container */
+.options-container {
+    margin: 25px 0;
+}
+
+.option {
+    display: block;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    background-color: transparent;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+    cursor: pointer;
+}
+
+.option:hover {
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1);
+    background-color: #fff;
+}
+
+.option.selected {
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1);
+    background-color: #fff;
+}
+
+.btn-submit {
+    display: block;
+    margin: 20px auto 0;
+    width: 200px;
+    padding: 5px !important;
+}
+
+.text-input:focus {
+    border-color: #811212;
+    outline: none;
+}
+
+.question-number {
+    font-size: 14px;
+    color: #811212;
+    text-transform: uppercase;
+    font-family: 'SFpro_regular', sans-serif;
+}
+
+.wrong {
+    animation: wrongAnswer 1s ease;
+}
+
+/* Results Page Styles */
+.results-container {
+    height: 100vh !important;
+}
+
+.results-content {
+    margin-top: 30px;
+    height: 100vh !important;
+}
+
+.score-circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 5%;
+}
+
+.score-circle {
+    height: 400px !important;
+    width: 400px !important;
+}
+
+.circle-progress {
+    transition: stroke-dashoffset 4s ease-in-out;
+    /* Remove the transform that was rotating it */
+    transform: none; 
+}
+
+.score-text {
+    font-family: 'SFpro_bold', sans-serif;
+    fill: #811212;
+}
+
+.score-stats {
+    padding: 20px;
+}
+
+.stat-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #000;
+    font-family: 'SFpro_regular', sans-serif;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.question-results h3 {
+    font-family: 'SFpro_bold', sans-serif;
+    color: #811212;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.results-list {
+    max-height: 60%  !important;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.result-item {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.result-correct {
+    border-left-color: #28a745;
+}
+
+.result-incorrect {
+    border-left-color: #dc3545;
+}
+
+.result-question {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    line-height: 1 !important;
+}
+
+.result-answer {
+    font-size: 16px;
+    line-height: 1 !important;
+    font-family: 'SFpro_regular', sans-serif;
+    margin: 5px;
+}
+
+.backLessons {
+    padding-top: 1.8rem;
+    display: flex;
+    justify-content: center;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #000;
+    text-transform: uppercase;
+    font-family: 'SFpro_regular', sans-serif;
+}
+
+.stat-score {
+    font-size: 16px;
+    color: #811212;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'SFpro_bold', sans-serif;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+.option {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+.option:active {
+    color: #811212;
+}
+
+.header {
+    padding: 40px 0px 10px 0px;
+}
+
+.review {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    line-height: 1 !important;
+    text-transform: uppercase;
+    margin-top: 0;
+    color: #811212;
+    padding: 20px 0px 20px 0px;
+    text-align: end;
+}
+
+.headerLesson-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    line-height: .8 !important;
+    text-transform: uppercase;
+    margin-top: 0;
+    color: #811212;
+    padding: 0px 20px 5px;
+    width: 80% !important;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.headerLesson-title:focus {
+    outline: none;
+    border: solid 1PX #811212;
+}
+
+.edit-header {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    line-height: .8 !important;
+    text-transform: uppercase;
+    margin-top: 0;
+    color: #000;
+    padding: 0px 20px 5px 0px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quiz-container {
+        padding: 15px;
+    }
+    
+    .question-container {
+        padding: 20px;
+    }
+    
+    .option {
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        height: auto !important; /* Remove fixed height */
+        min-height: calc(100vh - 70px); /* Adjust for mobile nav */
+    }
+    
+    .main-content::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .content-area {
+        overflow-y: auto !important;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        height: auto !important; /* Remove fixed height */
+    }
+    
+    .content-area::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .editor-container {
+        height: auto !important; /* Remove fixed height */
+        min-height: auto !important;
+        max-height: none !important;
+        overflow: visible !important; /* Remove overflow restrictions */
+    }
+    
+    .editor-area {
+        overflow: visible !important; /* Remove scrolling */
+        height: auto !important; /* Adjust to content */
+        min-height: auto !important;
+    }
+    
+    .question-editor {
+        overflow: visible !important; /* Remove scrolling */
+        height: auto !important; /* Adjust to content */
+        min-height: auto !important;
+    }
+    
+    .question-text-editor {
+        min-height: 80px !important; /* Smaller minimum height */
+        height: auto !important; /* Adjust to content */
+    }
+    
+    .options-container {
+        height: auto !important; /* Adjust to content */
+    }
+    
+    /* Remove any fixed heights that cause scrolling */
+    .quiz-container {
+        height: auto !important;
+        min-height: 100vh;
+    }
+    
+    body {
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+}
+       
+/* Slide Editor Styles */
+.editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Changed to column for mobile layout */
+    overflow: hidden;
+    max-height: 80vh;
+}
+
+/* MOBILE: Slide Preview Panel at Bottom */
+.slide-preview-panel {
+    width: 100%; /* Full width on mobile */
+    height: 350px !important; /* Auto height */
+    overflow-x: auto; /* Horizontal scroll */
+    background: white;
+    border-top: 1px solid #dee2e6;
+    padding: 15px 0;
+    order: 3; /* Move to bottom in flex order */
+}
+
+.panel-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    padding: 0 20px 10px 20px;
+}
+
+.add-slide-btn {
+    padding: 10px 20px !important;
+    background: #ffff !important;
+    border-radius: 20px !important;
+    margin-right: 10px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px!important;
+    border: 1px solid #e9ecef !important;
+    color: #811212 !important;
+    border: 1px solid #811212 !important;
+    font-family: 'SFpro_regular', sans-serif !important;
+    border-radius: 100px !important;
+    width: 100%;
+}
+
+.add-slide-btn:hover {
+    background: #811212 !important;
+    color: white !important;
+}
+
+/* MOBILE: Horizontal Slide List */
+.slide-list {
+    display: flex; /* Changed to flex row */
+    flex-direction: row; /* Horizontal layout */
+    gap: 15px;
+    padding: 0 20px 10px 20px;
+    overflow-x: auto; /* Horizontal scrolling */
+    overflow-y: hidden;
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    min-height: 120px; /* Fixed height for horizontal row */
+    align-items: flex-start;
+}
+
+.slide-list::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+}
+
+.slide-item {
+    background-color: #811212;
+    border-radius: 15px;
+    border: solid 10px #ffff;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    min-width: 150px; /* Fixed width for horizontal items */
+    max-width: 150px;
+    flex-shrink: 0; /* Prevent shrinking */
+    height: 100px; /* Fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide-item.active {
+    scale: 1.05;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.slide-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.slide-number {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 24px; /* Smaller for mobile */
+    text-align: center;
+    width: 100% !important;
+    line-height: .5 !important;
+    text-transform: uppercase;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.slide-content {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.slide-type {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 10px;
+    font-weight: bolder;
+    background-color: #fff;
+    color: #811212;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.slide-text {
+    text-align: center;
+    font-size: 12px; /* Smaller for mobile */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    color: white;
+    font-family: 'SFpro_regular', sans-serif;
+    line-height: 1.2;
+    max-height: 2.4em;
+    display: none;
+}
+
+/* Editor Area */
+.editor-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    order: 2; /* Middle in flex order */
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.slide-nav {
+    display: flex;
+    gap: 10px;
+    justify-content: center !important;
+    align-items: center !important; /* Add this line for vertical centering */
+}
+
+.nav-btn {
+    background-color: #fff !important;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: #811212 !important;
+    color: white !important;
+}
+
+.question-editor {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex: 1;
+}
+
+.question-type-badge {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 10px;
+    font-weight: bolder;
+    background-color: #811212;
+    color: #fff;
+    padding: 0px 10px;
+    text-transform: uppercase;
+    text-align: center;
+    width: 10rem;
+    margin-bottom: 10px;
+}
+
+.question-text-editor {
+    width: 100%;
+    min-height: 100px;
+    border: 1px dashed #811212;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 18px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+:focus-visible {
+    outline: none !important;
+}
+
+.question-text-editor:focus {
+    border: none !important;
+    border-color: #811212 !important;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1) !important;
+    background-color: #fff !important;
+}
+
+.options-container {
+    margin-bottom: 25px;
+}
+
+.option-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+}
+
+.option-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+        
+.correct-toggle {
+    border: 1px solid #811212;
+    border-radius: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    color: #811212;
+    background-color: transparent;
+    width: 10rem;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.correct-toggle.correct {
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: gradientShift 3s ease infinite;
+}
+
+/* Transition animation for state changes */
+.correct-toggle {
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Scale animation when toggling states */
+@keyframes toggleState {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.correct-toggle.correct {
+    animation: toggleState 0.4s ease, gradientShift 3s ease infinite;
+}
+
+.correct-toggle:not(.correct) {
+    animation: toggleState 0.4s ease;
+}
+
+/* Fade transition for smoother state change */
+.correct-toggle {
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.4s ease, background-color 0.5s ease;
+}
+
+.correct-toggle.correct {
+    opacity: 1;
+}
+        
+.editor-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color: #6c757d;
+}
+
+.btn-outline:hover {
+    background-color: #f8f9fa;
+}
+
+.btnSubmit {
+    width: 30rem !important;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 8px;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.btnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+        
+/* Footer */
+.footer {
+    background-color: white;
+    padding: 15px 25px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    order: 4; /* Bottom in flex order */
+}
+
+.slide-count {
+    color: #6c757d;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0px;
+}
+
+/* Modal */
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 700px !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}
+
+.custom-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    width: 700px;
+}
+
+.modal-header {
+    padding: 30px 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border: none !important;
+}
+
+.modalCard-img {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%) !important;
+    transition: all 0.5s ease;
+    width: 100%;
+}
+
+.alertTitle {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    margin: 0 !important;
+    line-height: 1;
+    padding-top: 20px;
+}
+
+.optionTitle {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    margin: 0 !important;
+    line-height: 1;
+    color: #811212;
+}
+
+.alertCaption {
+    font-family: 'SFpro_regular', sans-serif;
+    line-height: 1;
+    margin-top: .5rem;
+}
+        
+.question-type-option {
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+        
+.question-type-option:hover {
+    background-color: #881212;
+    color: #fff;
+}
+
+/* Add these new rules to your existing CSS */
+
+/* Style for the textarea question editor */
+.question-text-editor.form-control {
+    width: 100%;
+    min-height: 100px;
+    border: 1px dashed #811212;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 18px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    resize: vertical;
+    /* Use the same focus style as before */
+}
+
+.question-text-editor.form-control:focus {
+    border: none;
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1);
+    background-color: #fff;
+    outline: none;
+}
+
+/* Ensure option inputs look consistent */
+.option-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+.option-input:focus {
+    outline: none;
+    border: 1px solid #811212;
+}
+
+/* Style for the hidden JSON input (optional) */
+#quizDataJson {
+    display: none;
+}
+
+.option-row .form-control:focus {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+/* ===== MOBILE QUIZ EDITOR STYLES ===== */
+.mobile-quiz-editor {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 70vh;
+}
+
+.mobile-editor-header {
+    display: flex;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.mobile-tab-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    border-radius: 8px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mobile-tab-btn.active {
+    background: #811212;
+    color: white;
+}
+
+.mobile-tab-content {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    min-height: 400px;
+}
+
+.mobile-tab-content.active {
+    display: block;
+}
+
+/* Mobile Slide List */
+.mobile-slide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-add-btn {
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.mobile-slides-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-slide-item {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-slide-item.active {
+    border-color: #811212;
+    background: rgba(129, 18, 18, 0.05);
+}
+
+.mobile-slide-number {
+    background: #811212;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.mobile-slide-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.mobile-slide-preview {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mobile-slide-type {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 12px;
+    color: #811212;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+/* Mobile Question Editor */
+.mobile-question-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mobile-editor-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.mobile-editor-actions .action-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.mobile-editor-actions .btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.mobile-editor-actions .btn-primary {
+    background: #811212;
+    color: white;
+}
+
+/* Mobile Option Items */
+.mobile-option-item {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-option-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    padding: 8px;
+    background: transparent;
+}
+
+.mobile-option-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.mobile-option-action {
+    background: none;
+    border: none;
+    color: #811212;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Hide desktop elements on mobile */
+    .desktop-editor-container {
+        display: none !important;
+    }
+    
+    /* .slide-preview-panel,
+    .editor-area {
+        display: none !important;
+    } */
+    
+    /* Show mobile elements only on mobile */
+    .mobile-quiz-editor {
+        display: flex !important;
+    }
+    
+    /* Adjust main content for mobile */
+    @media (max-width: 768px) {
+        .main-content {
+            height: auto;
+            max-height: calc(100vh - 210px);
+            width: 100% !important; /* Change from auto to 100% */
+            background-color: white !important;
+        }
+    }
+    
+    .editor-container {
+        max-height: none;
+        flex: 1;
+    }
+    
+    .footer {
+        position: fixed;
+        display: table-column;
+        bottom: 100px; /* Above mobile nav */
+        left: 0;
+        right: 0;
+        background: white;
+        z-index: 99;
+        padding: 10px 15px;
+        height: auto;
+    }
+    
+    .btnSubmit {
+        width: 100% !important;
+        padding: 12px !important;
+        font-size: 18px !important;
+    }
+    
+    .header {
+        padding: 20px 15px 10px 15px;
+        gap: 10px;
+    }
+    
+    .headerLesson-title {
+        font-size: 20px !important;
+        width: 100% !important;
+    }
+    
+    .exitButton {
+        padding: 8px 20px !important;
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-editor-header {
+        padding: 8px;
+    }
+    
+    .mobile-tab-btn {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .mobile-tab-content {
+        padding: 10px;
+    }
+    
+    .mobile-add-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .mobile-slide-item {
+        padding: 12px;
+    }
+    
+    .mobile-question-editor {
+        padding: 15px;
+    }
+}
+
+/* Ensure proper scrolling on mobile */
+.mobile-tab-content {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile form elements */
+.mobile-question-editor .form-control {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 12px 15px;
+}
+
+.mobile-question-editor textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Show desktop elements only on desktop */
+@media (min-width: 769px) {
+    .mobile-quiz-editor {
+        display: none !important;
+    }
+    
+    .desktop-editor-container {
+        display: flex !important;
+    }
+}
+
+/* Mobile-specific footer adjustments */
+@media (max-width: 768px) {
+    .footer {
+        padding: 15px;
+        position: fixed;
+        display: column;
+        bottom: 110px;
+        background: white;
+        border-top: 1px solid #dee2e6;
+        z-index: 100;
+    }
+    
+    .footer-actions {
+        flex: 1;
+    }
+    
+    .question-number {
+        font-size: 14px;
+    }
+}
+
+/* Ensure content doesn't get hidden behind mobile nav */
+.mobile-main-layout {
+    padding-bottom: 140px; /* Space for footer + mobile nav */
+}
+
+/* Mobile-specific button adjustments */
+@media (max-width: 768px) {
+    .mobile-editor-actions .action-btn {
+        font-size: 13px;
+        padding: 10px;
+    }
+    
+    .mobile-option-input {
+        font-size: 16px; /* Prevent zoom */
+    }
+}
+
+/* ===== MOBILE LAYOUT REORGANIZATION ===== */
+@media (max-width: 768px) {
+    .editor-container {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - 140px);
+    }
+    
+    /* Reorder elements for mobile */
+    .editor-area {
+        order: 1;
+        flex: 1;
+        padding: 15px;
+        min-height: 50vh;
+    }
+    
+    .slide-preview-panel {
+        order: 2;
+        height: auto;
+        min-height: 140px;
+        padding: 10px 0;
+        border-top: 1px solid #dee2e6;
+        background: #fff;
+    }
+    
+    .footer {
+        order: 3;
+        position: fixed;
+        display: column;
+        bottom: 110px;
+        left: 0;
+        right: 0;
+        background: white;
+        z-index: 100;
+        padding: 10px 15px;
+        height: auto;
+    }
+    
+    /* Adjust slide list for horizontal scrolling */
+    .slide-list {
+        flex-direction: row;
+        gap: 10px;
+        padding: 15px 15px 15px 15px;
+        min-height: 110px;
+    }
+    
+    .slide-item {
+        min-width: 120px;
+        max-width: 120px;
+        height: 90px;
+        padding: 10px;
+    }
+    
+    .slide-number {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+    
+    .slide-text {
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+        max-height: 2.2em;
+    }
+    
+    .slide-type {
+        font-size: 9px;
+        padding: 2px 6px;
+        line-height: 1;
+    }
+    
+    /* Adjust editor area for mobile */
+    .question-editor {
+        padding: 15px;
+    }
+    
+    .editor-header {
+        margin-bottom: 15px;
+    }
+    
+    .edit-header {
+        font-size: 20px;
+    }
+    
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 9px;
+    }
+    
+    /* Adjust buttons for mobile */
+    .editor-actions {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 480px) {
+    .slide-item {
+        min-width: 110px;
+        max-width: 110px;
+        height: 85px;
+    }
+    
+    .slide-number {
+        font-size: 18px;
+    }
+    
+    .editor-area {
+        padding: 10px;
+    }
+    
+    .question-editor {
+        padding: 12px;
+    }
+    
+    .footer {
+        padding: 8px 12px;
+    }
+    
+    .question-number {
+        font-size: 12px;
+    }
+    
+    .btnSubmit {
+        font-size: 16px !important;
+        padding: 10px !important;
+    }
+}

@@ -1,0 +1,340 @@
+/* Desktop CSS for topicSelection,php */
+
+@font-face {
+    font-family: 'SFpro_regular';
+    src: url('../fonts/sf-pro-text-regular.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_bold';
+    src: url('../fonts/SF-Pro-Display-Black.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_thin';
+    src: url('../fonts/SF-Pro-Display-Thin.ttf');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    position: relative; 
+}
+
+/* .transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+} */
+
+.page-contents {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 350px;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.row.justify-content-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    border: none !important;
+}
+
+.card-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    margin: 0 !important;
+    line-height: 1;
+}
+
+.topics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.caption {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+.form-text {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+.form-label {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 20px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    background-color: transparent;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1);
+    background-color: #fff;
+}
+
+.searchbtn {
+    border-radius: 15px;
+    padding: 0px 20px;
+    border: #811212 !important;
+    background-color: #811212 !important;
+    color: white;
+    transition: all 0.5s ease;
+}
+
+.topic-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: transparent;
+    color: #811212;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #811212;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+/* .items {
+    margin-bottom: 50px;
+} */
+
+.items:hover {
+    background-color: #811212;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.topic-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    object-fit: contain;
+    color: #811212;
+}
+
+.topic-name {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.lbl {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.add-topic {
+    color: #811212;
+    transition: color 0.2s ease;
+}
+
+.plainText {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+.topic-item:hover .add-topic {
+    color: #ffff;
+}
+
+.selected-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    min-height: 50px;
+}
+
+.selected-topic {
+    display: flex;
+    align-items: center;
+    padding: 15px 15px 12px 30px !important;
+    background-color: #811212;
+    color: #ffff;
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.remove-topic {
+    margin-left: 8px;
+    color: #ffff;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 14px;
+}
+
+.selected-topic:hover {
+    transform: translateY(-2px);
+}
+
+.suggestions-container {
+    position: absolute;
+    width: 93%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 0 0 4px 4px;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f1f1;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+}
+
+.suggestion-item:hover {
+    background-color: #811212;
+    color: white;
+}
+
+.no-topics {
+    text-align: center;
+    padding: 15px;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.8rem;
+}
+
+.btnSubmit {
+    width: 30rem !important;
+    max-width: 90%;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.btnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+/* Animation for adding/removing topics */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.selected-topic {
+    animation: fadeIn 0.3s ease;
+}

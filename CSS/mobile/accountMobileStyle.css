@@ -1,0 +1,675 @@
+/* ===== FONT IMPORTS ===== */
+@font-face {
+    font-family: 'SFpro_regular';
+    src: url('../fonts/sf-pro-text-regular.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_bold';
+    src: url('../fonts/SF-Pro-Display-Black.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_thin';
+    src: url('../fonts/SF-Pro-Display-Thin.ttf');
+}
+
+/* ===== ACCOUNT MOBILE PAGE STYLES ===== */
+.account-mobile-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.account-mobile-container {
+    background: rgba(255, 255, 255, 0.95);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.account-mobile-header {
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: 0 !important;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mobile-user-icon {
+    font-size: 3rem;
+    color: white;
+}
+
+.mobile-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-user-username {
+    font-family: 'SFpro_bold', sans-serif !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+}
+
+.mobile-user-email {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.mobile-account-close {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-account-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Body */
+.account-mobile-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.account-mobile-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 13px;
+}
+
+.account-mobile-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: #811212;
+}
+
+.account-mobile-item i:first-child {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    color: #811212;
+    width: 24px;
+    text-align: center;
+}
+
+.account-mobile-item span {
+    flex: 1;
+}
+
+.account-mobile-item i:last-child {
+    color: #999;
+    font-size: 1rem;
+}
+
+.premium-item {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #660000;
+    border: none;
+}
+
+.premium-item i:first-child {
+    color: #660000;
+}
+
+/* GakuCoins Display */
+.account-gakucoins-display {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    border-radius: 15px;
+    color: white;
+}
+
+.gakucoins-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.gakucoins-content i {
+    font-size: 2rem;
+    color: #FFD700;
+}
+
+.gakucoins-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.gakucoins-label {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.gakucoins-amount {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 24px;
+    color: #FFD700;
+}
+
+/* Footer */
+.account-mobile-footer {
+    padding: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.account-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background: #811212;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.btnSubmit {
+    width: 100% !important;
+    max-width: 100%;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.btnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+.account-logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .account-mobile-page {
+        padding: 10px;
+    }
+    
+    .account-mobile-header {
+        padding: 20px;
+    }
+    
+    .mobile-user-username {
+        font-size: 20px;
+    }
+    
+    .account-mobile-item {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .account-mobile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .mobile-user-info {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+
+
+
+
+
+/* [OFFICIAL] Navigation Bar Style */
+/* ===== MOBILE BOTTOM NAVIGATION ===== */
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #811212;
+    padding: 8px 0px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border-top: 3px solid #6a0e0e;
+}
+
+.mobile-nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end; /* Align items to bottom */
+    height: 100%;
+    position: relative;
+    gap: 5px;
+    margin: 0px 12px;
+}
+
+.mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 80px;
+    margin-bottom: 0;
+}
+
+.mobile-nav-item .bi {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-text {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.mobile-nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.mobile-nav-item.active .bi,
+.mobile-nav-item.active .mobile-nav-text {
+    color: #fff;
+}
+
+.mobile-nav-item:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-account-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* ===== PET DOME IN NAV BAR ===== */
+.mobile-pet-dome-nav {
+    position: relative;
+    flex: 1;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.pet-dome-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #811212, #a83232);
+    border: 4px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+        background-image: url('../../IMG/GameAssets/Untitled\ design.png'); /* IMAGE BACKGROUND */
+    background-size: cover; /* Or 'contain' depending on your preference */
+}
+
+.pet-dome-link:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pet-dome-image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain; /* Prevents stretching - image maintains aspect ratio */
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    background: transparent; /* Remove any background color */
+}
+
+.pet-dome-link:active .pet-dome-image {
+    transform: scale(1.1);
+}
+
+/* Alternative: If you want the image to cover the circle without distortion */
+.pet-dome-image.cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Covers the circle without stretching, may crop edges */
+    border-radius: 50%;
+}
+
+/* Alternative: If you want the image to fit entirely inside the circle */
+.pet-dome-image.contain {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Fits entire image inside circle, may have empty space */
+    border-radius: 50%;
+    background: transparent;
+}
+
+/* Pulse animation for the pet dome */
+@keyframes dome-pulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.pet-dome-link {
+    animation: dome-pulse 3s infinite;
+}
+
+/* ===== MOBILE ACCOUNT MODAL ===== */
+.mobile-account-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.mobile-account-modal.show {
+    display: block;
+}
+
+.mobile-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobile-modal-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    animation: slideUp 0.3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.mobile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background-color: #811212;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+
+.mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-user-icon {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.mobile-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-user-email {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.mobile-user-username {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+}
+
+.mobile-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-modal-body {
+    padding: 20px;
+}
+
+.mobile-modal-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.mobile-modal-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-modal-item .bi {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    color: #811212;
+    width: 24px;
+    text-align: center;
+}
+
+.mobile-modal-item span {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mobile-modal-item.premium-item .bi {
+    color: #ffd700;
+}
+
+.mobile-modal-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Mobile GakuCoins Display */
+.mobile-gakucoins-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF;
+    color: #b47a2e;
+    border: 3px solid #ece9de;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    gap: 8px;
+}
+
+.mobile-gakucoins-display .bi {
+    color: #b47a2e;
+    margin-right: 0;
+}
+
+.mobile-modal-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.mobile-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    background-color: #811212;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-logout-btn .bi {
+    margin-right: 10px;
+    color: white;
+}
+
+.mobile-logout-btn:hover {
+    background-color: #6a0e0e;
+    color: white;
+}
+
+/* ===== MAIN CONTENT ADJUSTMENT FOR MOBILE NAV ===== */
+.mobile-main-layout {
+    padding-bottom: 70px; /* Space for bottom nav */
+}
+
+.mobile-content-area {
+    width: 100%;
+    margin: 0 !important;
+    padding: 15px;
+    min-height: calc(100vh - 70px);
+}
+
+/* Hide desktop-specific elements on mobile */
+.side-navbar,
+.pet-panel,
+.gakucoins-display {
+    display: none !important;
+}

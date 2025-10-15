@@ -1,0 +1,1236 @@
+/* ===== FONT IMPORTS ===== */
+@font-face {
+    font-family: 'SFpro_regular';
+    src: url('../fonts/sf-pro-text-regular.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_bold';
+    src: url('../fonts/SF-Pro-Display-Black.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_thin';
+    src: url('../fonts/SF-Pro-Display-Thin.ttf');
+}
+
+/* ===== RESET & BASE STYLES ===== */
+.container, .container-fluid, .container-lg, .container-md, 
+.container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-color: #fff !important;
+}
+
+/* Make sure the body/html uses the main scrollbar */
+html, body {
+    overflow: auto;
+    height: 100%;
+}
+
+/* ===== THREE-COLUMN LAYOUT ===== */
+.main-layout {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* [OFFICIAL] Navigation Bar Style */
+/* ===== MOBILE BOTTOM NAVIGATION ===== */
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #811212;
+    padding: 8px 0px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border-top: 3px solid #6a0e0e;
+}
+
+.mobile-nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end; /* Align items to bottom */
+    height: 100%;
+    position: relative;
+    gap: 5px;
+    margin: 0px 12px;
+}
+
+.mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 80px;
+    margin-bottom: 0;
+}
+
+.mobile-nav-item .bi {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-text {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.mobile-nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.mobile-nav-item.active .bi,
+.mobile-nav-item.active .mobile-nav-text {
+    color: #fff;
+}
+
+.mobile-nav-item:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-account-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* ===== PET DOME IN NAV BAR ===== */
+.mobile-pet-dome-nav {
+    position: relative;
+    flex: 1;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.pet-dome-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #811212, #a83232);
+    border: 4px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+        background-image: url('../../IMG/GameAssets/Untitled\ design.png'); /* IMAGE BACKGROUND */
+    background-size: cover; /* Or 'contain' depending on your preference */
+}
+
+.pet-dome-link:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pet-dome-image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain; /* Prevents stretching - image maintains aspect ratio */
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    background: transparent; /* Remove any background color */
+}
+
+.pet-dome-link:active .pet-dome-image {
+    transform: scale(1.1);
+}
+
+/* Alternative: If you want the image to cover the circle without distortion */
+.pet-dome-image.cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Covers the circle without stretching, may crop edges */
+    border-radius: 50%;
+}
+
+/* Alternative: If you want the image to fit entirely inside the circle */
+.pet-dome-image.contain {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Fits entire image inside circle, may have empty space */
+    border-radius: 50%;
+    background: transparent;
+}
+
+/* Pulse animation for the pet dome */
+@keyframes dome-pulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.pet-dome-link {
+    animation: dome-pulse 3s infinite;
+}
+
+/* ===== MOBILE ACCOUNT MODAL ===== */
+.mobile-account-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.mobile-account-modal.show {
+    display: block;
+}
+
+.mobile-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobile-modal-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    animation: slideUp 0.3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.mobile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background-color: #811212;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+
+.mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-user-icon {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.mobile-user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-user-email {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.mobile-user-username {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+}
+
+.mobile-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-modal-body {
+    padding: 20px;
+}
+
+.mobile-modal-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.mobile-modal-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-modal-item .bi {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    color: #811212;
+    width: 24px;
+    text-align: center;
+}
+
+.mobile-modal-item span {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mobile-modal-item.premium-item .bi {
+    color: #ffd700;
+}
+
+.mobile-modal-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Mobile GakuCoins Display */
+.mobile-gakucoins-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF;
+    color: #b47a2e;
+    border: 3px solid #ece9de;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    gap: 8px;
+}
+
+.mobile-gakucoins-display .bi {
+    color: #b47a2e;
+    margin-right: 0;
+}
+
+.mobile-modal-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.mobile-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    background-color: #811212;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-logout-btn .bi {
+    margin-right: 10px;
+    color: white;
+}
+
+.mobile-logout-btn:hover {
+    background-color: #6a0e0e;
+    color: white;
+}
+
+/* ===== MAIN CONTENT ADJUSTMENT FOR MOBILE NAV ===== */
+.mobile-main-layout {
+    padding-bottom: 70px; /* Space for bottom nav */
+}
+
+.mobile-content-area {
+    width: 100%;
+    margin: 0 !important;
+    padding: 15px;
+    min-height: calc(100vh - 70px);
+    margin-bottom: 100px !important;
+}
+
+/* Hide desktop-specific elements on mobile */
+.side-navbar,
+.pet-panel,
+.gakucoins-display {
+    display: none !important;
+}
+
+.FAQ {
+    margin-bottom: 100px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== CONTENT AREA STYLES ===== */
+.content-area {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    overflow-y: auto; /* Only this section scrolls */
+}
+
+/* Hero section */
+.hero-section {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    color: white;
+    margin: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    gap: 40px;
+    margin-top: 50px !important;
+}
+
+.hero-image {
+    flex: 0 0 300px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0px 25px 0px 25px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    flex: 1;
+    text-align: left;
+}
+
+.hero-title {
+    font-size: 100px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+    font-family: 'SFpro_bold', sans-serif;
+    text-transform: uppercase;
+    line-height: .8;
+}
+
+.hero-subtitle {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    font-family: 'SFpro_regular', sans-serif;
+    line-height: 1;
+    text-transform: uppercase;
+    opacity: .7;
+}
+
+/* Section styling */
+.section {
+    padding: 30px;
+    background: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8e8e8;
+    font-weight: 600;
+    font-family: 'SFpro_bold', sans-serif;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* Two-column layout for sections */
+.two-column-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+/* Plan Card Styles */
+.plan-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.premium-plan {
+    border-color: #811212;
+    transform: scale(1.02);
+}
+
+.plan-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #811212;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.plan-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.plan-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+}
+
+.price-amount {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 3rem;
+    color: #811212;
+}
+
+.free-plan .price-amount {
+    color: #6c757d;
+}
+
+.price-period {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Benefits grid - 2x2 layout */
+.benefits-grid {
+    display: column;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px; /* Added space below benefits */
+}
+
+.benefit-card {
+    display: flex;
+    background-color: #811212;
+    border-radius: 15px;
+    border: solid 10px #ffff;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    align-items: center;
+}
+
+.benefit-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.benefit-icon {
+    font-size: 2rem;
+    color: #fff;
+    margin-right: 15px;
+    flex-shrink: 0;
+    margin: 0px 30px 0px 20px;
+}
+
+.benefit-content h3 {
+    font-size: 25px;
+    margin: 10px 0 10px 0;
+    color: #fff;
+    font-family: 'SFpro_bold', sans-serif;
+}
+
+.benefit-text {
+    font-size: 16px;
+    color: #fff;
+    line-height: 1;
+    font-family: 'SFpro_regular', sans-serif;
+}
+
+/* Button Container - NEW: Added proper spacing for buttons */
+.button-container {
+    margin-top: auto; /* Push button to bottom */
+    padding-top: 30px; /* Added space above button */
+    text-align: center;
+}
+
+/* Status Card */
+.status-card {
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin: 0 !important; /* Added bottom margin */
+    width: 100%;
+}
+
+.status-card.free {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
+/* CTA Button */
+.cta-button {
+    width: 100% !important;
+    max-width: 300px;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: #fff;
+    background-size: 200% 200%;
+    border: none;
+    color: #811212;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 12px 20px;
+    cursor: pointer;
+    margin-top: 20px; /* Added space above button */
+}
+
+.cta-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background: #f8f8f8;
+    color: #811212;
+}
+
+.cta-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* FAQ Accordion Styles */
+.accordion {
+    --bs-accordion-bg: #fff;
+    --bs-accordion-border-color: #e8e8e8;
+    --bs-accordion-border-width: 1px;
+    --bs-accordion-border-radius: 10px;
+    --bs-accordion-btn-padding-x: 1.25rem;
+    --bs-accordion-btn-padding-y: 1rem;
+    --bs-accordion-btn-bg: #fff;
+    font-family: 'SFpro_regular', sans-serif;
+    color: #000;
+    line-height: 1;
+    font-size: 16px;
+    --bs-accordion-btn-focus-box-shadow: #000;
+}
+
+.accordion-button {
+    border-radius: 10px !important;
+    transition: all 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #fff;
+    background-color: #811212;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05) !important;
+    font-weight: bold;
+}
+
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23811212'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+}
+
+.accordion-body {
+    padding: 1.25rem;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    font-family: 'SFpro_regular', sans-serif;
+    color: #000;
+    line-height: 1;
+    font-size: 16px;
+}
+
+.accordion-item {
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.accordion-item:not(.collapsed) {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.accordion-item:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+/* ===== MODAL STYLES ===== */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.custom-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+.custom-modal-dialog {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow: hidden;
+    z-index: 10000;
+    transform: translateY(50px) scale(0.95);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.custom-modal.active .custom-modal-dialog {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.custom-modal-content {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.custom-modal-header {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.modalCard-img {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%) !important;
+    transition: all 0.5s ease;
+    width: 100%;
+}
+
+.custom-modal-body {
+    padding: .5rem 2rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.custom-modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    background-color: #f8f9fa;
+}
+
+/* Form Styles */
+.cardLesson-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 40px;
+    text-transform: uppercase;
+    color: #000;
+    line-height: .8;
+}
+
+.cardLesson-description {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    color: #000;
+    line-height: 1;
+}
+
+.mb-4 {
+    margin-bottom: .5rem !important;
+    line-height: 1 !important;
+}
+
+ol, ul {
+    padding-left: 2rem;
+    line-height: 1;
+}
+
+.form-label {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 20px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    background-color: transparent;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1);
+    background-color: #fff;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+}
+
+.btnSubmit {
+    width: 30rem !important;
+    max-width: 90%;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.exitButton {
+    padding: 10px 20px !important;
+    background: #f8f9fa !important;
+    border-radius: 20px !important;
+    margin-right: 10px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px!important;
+    border: 1px solid #e9ecef !important;
+    color: #811212 !important;
+    border: 1px solid #811212 !important;
+    font-family: 'SFpro_regular', sans-serif !important;
+    border-radius: 100px !important;
+}
+
+.exitButton:hover {
+    background: #811212 !important;
+    color: white !important;
+}
+
+/* Toast Styles */
+.toast-body, .me-auto {
+    font-family: 'SFpro_regular', sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+}
+
+/* Animations */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .two-column-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .hero-content {
+        text-align: center;
+    }
+    
+    .hero-image {
+        flex: 0 0 250px;
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .two-column-section {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-section {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .hero-image {
+        flex: 0 0 200px;
+        width: 200px;
+        height: 200px;
+    }
+    
+    .section {
+        padding: 20px;
+    }
+    
+    .status-card {
+        margin: 0 20px;
+    }
+    
+    .cta-button {
+        width: 100% !important;
+        max-width: 300px;
+    }
+    
+    .plan-card {
+        padding: 20px;
+    }
+}
+
+/* Plan Card Styles - Fixed for bottom alignment */
+.plan-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 650px; /* Fixed height to equalize cards */
+    height: auto;
+}
+
+.premium-plan {
+    border-color: #811212;
+    transform: scale(1.02);
+}
+
+.plan-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #811212;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.plan-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.plan-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+}
+
+.price-amount {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 3rem;
+    color: #811212;
+}
+
+.free-plan .price-amount {
+    color: #6c757d;
+}
+
+.price-period {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Benefits grid */
+.benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 20px 0;
+    flex-grow: 1; /* This makes the benefits section grow and push button down */
+}
+
+/* Button Container - Forces buttons to bottom */
+.button-container {
+    margin-top: auto; /* This is key - pushes to bottom */
+    padding-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Free Plan Benefit Cards */
+.free-benefit {
+    background: #6c757d !important;
+}
+
+/* Button Styles */
+.cta-button {
+    width: 100% !important;
+    max-width: 300px;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Subscribe Now Button - Brown & White */
+.subscribe-btn {
+    background: #fff !important;
+    color: #811212 !important;
+    border: 2px solid #811212 !important;
+}
+
+.subscribe-btn:hover {
+    background: #f8f8f8 !important;
+    color: #811212 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(129, 18, 18, 0.3);
+}
+
+/* Current Plan Button - Brown & White */
+.current-plan-btn {
+    background: #811212 !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+/* Free Plan Button - Grey & Dark Grey */
+.free-plan-btn {
+    background: #6c757d !important;
+    color: #333333 !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Plan Card Layout */
+.plan-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 650px;
+    height: auto;
+}
+
+.premium-plan {
+    border-color: #811212;
+}
+
+/* Benefits Grid */
+.benefits-grid {
+    gap: 20px;
+    margin: 20px 0;
+    flex-grow: 1;
+}
+
+/* Button Container */
+.button-container {
+    margin-top: auto;
+    padding-top: 30px;
+    text-align: center;
+    width: 100%;
+}

@@ -1,0 +1,656 @@
+/* Desktop CSS for topicSelection,php */
+
+@font-face {
+    font-family: 'SFpro_regular';
+    src: url('../fonts/sf-pro-text-regular.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_bold';
+    src: url('../fonts/SF-Pro-Display-Black.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_thin';
+    src: url('../fonts/SF-Pro-Display-Thin.ttf');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    position: relative; 
+}
+
+/* .transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+} */
+
+.page-contents {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 350px;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.row.justify-content-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+
+.card {
+    border: none !important;
+}
+
+.card-title {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    margin: 0 !important;
+    line-height: 1;
+}
+
+/* Pet Selection Styles */
+.pets-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+/* .pet-option {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 0px 12px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+    height: 300px;
+    width: 350px;
+}
+
+.pet-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(129, 18, 18, 0.2);
+    border-color: #811212;
+}
+
+.pet-option.selected {
+    border-color: #811212;
+    box-shadow: 0 8px 20px rgba(129, 18, 18, 0.3);
+} */
+
+.pet-img {
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    transition: all 0.5s ease;
+}
+
+/* Pet Selection Styles */
+.pets-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.pet-option {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    width: 22rem;
+    text-align: center;
+    height: fit-content;
+}
+
+.pet-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(129, 18, 18, 0.2);
+    border-color: #811212;
+}
+
+.pet-option.selected {
+    border-color: #811212;
+    box-shadow: 0 8px 20px rgba(129, 18, 18, 0.3);
+}
+
+.pet-img {
+    /* height: 30rem; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: white; /* Changed to white background */
+}
+
+.pet-image {
+    max-width: 80%;  /* Reduced from 100% to prevent oversized images */
+    max-height: 80%; /* Reduced from 100% to prevent oversized images */
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.pet-option:hover .pet-image {
+    transform: scale(1.1);
+}
+
+.pet-option:hover .pet-name {
+    color: #811212;
+}
+
+.pet-info {
+    padding: 15px;
+}
+
+.pet-name {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    color: black;
+    margin-bottom: 0.5rem;
+}
+
+/* .pet-description-container {
+    min-height: 60px;
+} */
+
+.pet-description {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* Selection indicator */
+/* Fix the checkmark size */
+.selected-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 70px;  /* Increased from 25px */
+    height: 70px; /* Increased from 25px */
+    border-radius: 50%;
+    background: #4C0707;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+    z-index: 10; /* Ensure it's above the image */
+}
+
+.selected-indicator i {
+    font-size: 14px; /* Explicit font size for the checkmark */
+}
+
+.pet-option.selected .selected-indicator {
+    opacity: 1;
+    transform: scale(.5);
+}
+
+.pet-option.selected .pet-name {
+    color: #811212 !important;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.8rem;
+}
+
+.fas {
+    font-size: 40px !important;
+}
+
+.btnConfirm {
+    width: 30rem !important;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 15px 30px;
+}
+
+.btnConfirm:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.btnConfirm::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnConfirm:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+/* Modal styling */
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 700px !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}
+
+.custom-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    width: 700px;
+}
+
+.custom-modal-header {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.modalCard-img {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%) !important;
+    transition: all 0.5s ease;
+    width: 100%;
+}
+
+.alertTitle {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    margin: 0 !important;
+    line-height: 1;
+    padding-top: 20px;
+}
+
+.alertCaption {
+    font-family: 'SFpro_regular', sans-serif;
+    line-height: 1;
+    margin-top: .5rem;
+}
+
+.modal-footer {
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+}
+
+.modalBtnSubmit {
+    width: 30rem !important;
+    max-width: 90%;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.modalBtnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.modalBtnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modalBtnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+.exitButton {
+    padding: 10px 20px !important;
+    background: #f8f9fa !important;
+    border-radius: 20px !important;
+    margin-right: 10px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px!important;
+    border: 1px solid #e9ecef !important;
+    color: #811212 !important;
+    border: 1px solid #811212 !important;
+    font-family: 'SFpro_regular', sans-serif !important;
+    border-radius: 100px !important;
+}
+
+.btnSubmit {
+    width: 30rem !important;
+    max-width: 90%;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.btnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+.exitButton:hover {
+    background: #811212 !important;
+    color: white !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pets-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pet-option {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .btnConfirm {
+        font-size: 20px;
+        padding: 12px 25px;
+    }
+}
+
+/* Name input container */
+.name-input-container {
+    margin: 30px 0;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Form control styling */
+.form-control {
+    border-radius: 15px;
+    padding: 15px 20px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 0.25);
+}
+
+.form-label {
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 18px;
+    color: #4C0707;
+    margin-bottom: 10px;
+}
+
+.form-text {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* Final submit button */
+.btnSubmitFinal {
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    padding: 15px 30px;
+}
+
+.btnSubmitFinal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+/* Animation for the selected pet moving right */
+.pet-option {
+    transition: transform 0.5s ease;
+}
+
+/* Animation for name input appearing */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .name-input-container .col-md-6 {
+        width: 100% !important;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+    
+    .pet-option.selected {
+        transform: translateX(0) !important;
+        margin-bottom: 20px;
+    }
+    
+    .pets-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}

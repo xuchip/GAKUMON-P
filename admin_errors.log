@@ -1,0 +1,256 @@
+2025-10-15 22:34:46 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760560486167","email_address":"test@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:34:46 - Creating user - Context: {"username":"testuser1760560486167","email":"test@example.com"}
+2025-10-15 22:34:46 - User created successfully - Context: {"user_id":30}
+2025-10-15 22:34:47 - Admin AJAX Request - Context: {"action":"update_user","method":"POST","post_data":{"action":"update_user","user_id":"1","first_name":"Updated","last_name":"User","username":"updateduser1760560487172","email_address":"updated@example.com","role":"Gakusei","subscription_type":"Premium","gakucoins":"200","is_verified":"1"},"get_data":[]}
+2025-10-15 22:34:47 - Updating user - Context: {"user_id":"1","username":"updateduser1760560487172"}
+2025-10-15 22:34:47 - User updated successfully - Context: {"user_id":"1"}
+2025-10-15 22:34:47 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"1"}}
+2025-10-15 22:34:47 - Getting user - Context: {"user_id":"1"}
+2025-10-15 22:34:47 - User not found - Context: {"user_id":"1"}
+2025-10-15 22:34:48 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760560488178","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"30 minutes","topic_id":"1","difficulty_level":"Beginner","is_private":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:34:48 - Exception caught in admin_ajax.php - Context: {"message":"Incorrect time value: '30 minutes' for column `db_gakumon`.`tbl_lesson`.`duration` at row 1","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":244,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(244): mysqli_stmt->execute()\n#1 {main}"}
+2025-10-15 22:34:49 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760560489172","lesson_id":"null","is_ai_generated":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:34:49 - Exception caught in admin_ajax.php - Context: {"message":"Cannot add or update a child row: a foreign key constraint fails (`db_gakumon`.`tbl_quizzes`, CONSTRAINT `fk_quizzes_lesson_cascade` FOREIGN KEY (`lesson_id`) REFERENCES `tbl_lesson` (`lesson_id`) ON DELETE CASCADE)","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":319,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(319): mysqli_stmt->execute()\n#1 {main}"}
+2025-10-15 22:37:56 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:37:56 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760560676840","email_address":"test@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:37:56 - Creating user - Context: {"username":"testuser1760560676840","email":"test@example.com"}
+2025-10-15 22:37:56 - Error creating user - Context: {"error":"Duplicate entry 'test@example.com' for key 'email_address'"}
+2025-10-15 22:37:57 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:37:57 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"30"}}
+2025-10-15 22:37:57 - Getting user - Context: {"user_id":"30"}
+2025-10-15 22:37:57 - User retrieved successfully - Context: {"user_id":"30"}
+2025-10-15 22:37:58 - Admin AJAX Request - Context: {"action":"create_topic","method":"POST","post_data":{"action":"create_topic","topic_name":"Test Topic","topic_icon":"\ud83d\udcda"},"get_data":[]}
+2025-10-15 22:37:58 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760560678871","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"00:30:00","topic_id":"1","difficulty_level":"Beginner","is_private":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:37:58 - Creating lesson - Context: {"title":"Test Lesson 1760560678871","duration":"00:30:00"}
+2025-10-15 22:37:58 - Error creating lesson - Context: {"error":"Cannot add or update a child row: a foreign key constraint fails (`db_gakumon`.`tbl_lesson`, CONSTRAINT `tbl_lesson_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `tbl_user` (`user_id`))"}
+2025-10-15 22:38:00 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760560680846","lesson_id":"null","is_ai_generated":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:38:00 - Creating quiz - Context: {"title":"Test Quiz 1760560680846","lesson_id":"null"}
+2025-10-15 22:38:00 - Error creating quiz - Context: {"error":"Referenced lesson does not exist"}
+2025-10-15 22:38:41 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:38:41 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760560721177","email_address":"test@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:38:41 - Creating user - Context: {"username":"testuser1760560721177","email":"test@example.com"}
+2025-10-15 22:38:41 - User created successfully - Context: {"user_id":32}
+2025-10-15 22:38:42 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:38:42 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"32"}}
+2025-10-15 22:38:42 - Getting user - Context: {"user_id":"32"}
+2025-10-15 22:38:42 - User retrieved successfully - Context: {"user_id":"32"}
+2025-10-15 22:38:43 - Admin AJAX Request - Context: {"action":"create_topic","method":"POST","post_data":{"action":"create_topic","topic_name":"Test Topic","topic_icon":"\ud83d\udcda"},"get_data":[]}
+2025-10-15 22:38:43 - Exception caught in admin_ajax.php - Context: {"message":"Duplicate entry 'Test Topic' for key 'topic_name'","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":601,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(601): mysqli_stmt->execute()\n#1 {main}"}
+2025-10-15 22:38:43 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760560723192","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"00:30:00","topic_id":"1","difficulty_level":"Beginner","is_private":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:38:43 - Creating lesson - Context: {"title":"Test Lesson 1760560723192","duration":"00:30:00"}
+2025-10-15 22:38:43 - Error creating lesson - Context: {"error":"Cannot add or update a child row: a foreign key constraint fails (`db_gakumon`.`tbl_lesson`, CONSTRAINT `tbl_lesson_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `tbl_user` (`user_id`))"}
+2025-10-15 22:38:45 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760560725179","lesson_id":"null","is_ai_generated":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:38:45 - Creating quiz - Context: {"title":"Test Quiz 1760560725179","lesson_id":"null"}
+2025-10-15 22:38:45 - Error creating quiz - Context: {"error":"Referenced lesson does not exist"}
+2025-10-15 22:40:50 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:40:50 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760560850928","email_address":"test1760560850928@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:40:51 - Creating user - Context: {"username":"testuser1760560850928","email":"test1760560850928@example.com"}
+2025-10-15 22:40:51 - User created successfully - Context: {"user_id":33}
+2025-10-15 22:40:51 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:40:51 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"33"}}
+2025-10-15 22:40:51 - Getting user - Context: {"user_id":"33"}
+2025-10-15 22:40:51 - User retrieved successfully - Context: {"user_id":"33"}
+2025-10-15 22:40:52 - Admin AJAX Request - Context: {"action":"create_topic","method":"POST","post_data":{"action":"create_topic","topic_name":"Test Topic 1760560852934","topic_icon":"\ud83d\udcda"},"get_data":[]}
+2025-10-15 22:40:52 - Admin AJAX Request - Context: {"action":"get_chart_data","method":"GET","post_data":[],"get_data":{"action":"get_chart_data"}}
+2025-10-15 22:40:52 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760560852957","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"00:30:00","topic_id":"26","difficulty_level":"Beginner","is_private":"0","author_id":""},"get_data":[]}
+2025-10-15 22:40:52 - Creating lesson - Context: {"title":"Test Lesson 1760560852957","duration":"00:30:00","author_id":null}
+2025-10-15 22:40:52 - Lesson created successfully - Context: {"lesson_id":146}
+2025-10-15 22:40:54 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760560854082","lesson_id":"146","is_ai_generated":"0","author_id":"null"},"get_data":[]}
+2025-10-15 22:40:54 - Creating quiz - Context: {"title":"Test Quiz 1760560854082","lesson_id":"146"}
+2025-10-15 22:40:54 - Error creating quiz - Context: {"error":"Cannot add or update a child row: a foreign key constraint fails (`db_gakumon`.`tbl_quizzes`, CONSTRAINT `fk_quizzes_author` FOREIGN KEY (`author_id`) REFERENCES `tbl_user` (`user_id`) ON DELETE SET NULL)"}
+2025-10-15 22:41:55 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:41:55 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760560915790","email_address":"test1760560915790@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:41:55 - Creating user - Context: {"username":"testuser1760560915790","email":"test1760560915790@example.com"}
+2025-10-15 22:41:55 - User created successfully - Context: {"user_id":34}
+2025-10-15 22:41:56 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:41:56 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-15 22:41:56 - Getting user - Context: {"user_id":"34"}
+2025-10-15 22:41:56 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-15 22:41:57 - Admin AJAX Request - Context: {"action":"create_topic","method":"POST","post_data":{"action":"create_topic","topic_name":"Test Topic 1760560917802","topic_icon":"\ud83d\udcda"},"get_data":[]}
+2025-10-15 22:41:57 - Admin AJAX Request - Context: {"action":"get_chart_data","method":"GET","post_data":[],"get_data":{"action":"get_chart_data"}}
+2025-10-15 22:41:57 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760560917853","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"00:30:00","topic_id":"27","difficulty_level":"Beginner","is_private":"0","author_id":""},"get_data":[]}
+2025-10-15 22:41:57 - Creating lesson - Context: {"title":"Test Lesson 1760560917853","duration":"00:30:00","author_id":null}
+2025-10-15 22:41:57 - Lesson created successfully - Context: {"lesson_id":147}
+2025-10-15 22:41:58 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760560918902","lesson_id":"147","is_ai_generated":"0","author_id":""},"get_data":[]}
+2025-10-15 22:41:58 - Creating quiz - Context: {"title":"Test Quiz 1760560918902","lesson_id":"147","author_id":null}
+2025-10-15 22:41:58 - Quiz created successfully - Context: {"quiz_id":63}
+2025-10-15 22:45:38 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-15 22:45:38 - Getting user - Context: {"user_id":"34"}
+2025-10-15 22:45:38 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-15 22:45:43 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"29"}}
+2025-10-15 22:45:43 - Getting user - Context: {"user_id":"29"}
+2025-10-15 22:45:43 - User retrieved successfully - Context: {"user_id":"29"}
+2025-10-15 22:48:16 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-15 22:48:16 - Getting user - Context: {"user_id":"34"}
+2025-10-15 22:48:16 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-15 22:48:58 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-15 22:48:58 - Getting user - Context: {"user_id":"34"}
+2025-10-15 22:48:58 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-15 22:49:05 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"26"}}
+2025-10-15 22:49:05 - Getting user - Context: {"user_id":"26"}
+2025-10-15 22:49:05 - User retrieved successfully - Context: {"user_id":"26"}
+2025-10-15 22:50:26 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"2"}}
+2025-10-15 22:50:26 - Getting user - Context: {"user_id":"2"}
+2025-10-15 22:50:26 - User retrieved successfully - Context: {"user_id":"2"}
+2025-10-15 22:51:08 - Admin AJAX Request - Context: {"action":"approve_application","method":"POST","post_data":{"action":"approve_application","application_id":"1"},"get_data":[]}
+2025-10-15 22:55:47 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-15 22:55:47 - Getting user - Context: {"user_id":"34"}
+2025-10-15 22:55:47 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-15 22:55:50 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-15 22:55:50 - Getting user - Context: {"user_id":"34"}
+2025-10-15 22:55:50 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-15 22:55:59 - Admin AJAX Request - Context: {"action":"get_lesson","method":"GET","post_data":[],"get_data":{"action":"get_lesson","lesson_id":"147"}}
+2025-10-15 22:56:03 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"63"}}
+2025-10-15 22:56:22 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"63"}}
+2025-10-15 22:56:29 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"63"}}
+2025-10-15 22:56:33 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"63"}}
+2025-10-15 22:56:41 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:56:41 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760561801055","email_address":"test1760561801055@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:56:41 - Creating user - Context: {"username":"testuser1760561801055","email":"test1760561801055@example.com"}
+2025-10-15 22:56:41 - User created successfully - Context: {"user_id":35}
+2025-10-15 22:56:42 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:56:42 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"35"}}
+2025-10-15 22:56:42 - Getting user - Context: {"user_id":"35"}
+2025-10-15 22:56:42 - User retrieved successfully - Context: {"user_id":"35"}
+2025-10-15 22:56:43 - Admin AJAX Request - Context: {"action":"create_topic","method":"POST","post_data":{"action":"create_topic","topic_name":"Test Topic 1760561803058","topic_icon":"\ud83d\udcda"},"get_data":[]}
+2025-10-15 22:56:43 - Admin AJAX Request - Context: {"action":"get_chart_data","method":"GET","post_data":[],"get_data":{"action":"get_chart_data"}}
+2025-10-15 22:56:43 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760561803081","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"00:30:00","topic_id":"28","difficulty_level":"Beginner","is_private":"0","author_id":""},"get_data":[]}
+2025-10-15 22:56:43 - Creating lesson - Context: {"title":"Test Lesson 1760561803081","duration":"00:30:00","author_id":null}
+2025-10-15 22:56:43 - Lesson created successfully - Context: {"lesson_id":148}
+2025-10-15 22:56:44 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760561804134","lesson_id":"148","is_ai_generated":"0","author_id":""},"get_data":[]}
+2025-10-15 22:56:44 - Creating quiz - Context: {"title":"Test Quiz 1760561804134","lesson_id":"148","author_id":null}
+2025-10-15 22:56:44 - Quiz created successfully - Context: {"quiz_id":64}
+2025-10-15 22:56:53 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:56:53 - Admin AJAX Request - Context: {"action":"create_user","method":"POST","post_data":{"action":"create_user","first_name":"Test","last_name":"User","username":"testuser1760561813247","email_address":"test1760561813247@example.com","password":"testpass123","role":"Gakusei","subscription_type":"Free","gakucoins":"100","is_verified":"1"},"get_data":[]}
+2025-10-15 22:56:53 - Creating user - Context: {"username":"testuser1760561813247","email":"test1760561813247@example.com"}
+2025-10-15 22:56:53 - User created successfully - Context: {"user_id":36}
+2025-10-15 22:56:54 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 22:56:54 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"36"}}
+2025-10-15 22:56:54 - Getting user - Context: {"user_id":"36"}
+2025-10-15 22:56:54 - User retrieved successfully - Context: {"user_id":"36"}
+2025-10-15 22:56:55 - Admin AJAX Request - Context: {"action":"create_topic","method":"POST","post_data":{"action":"create_topic","topic_name":"Test Topic 1760561815264","topic_icon":"\ud83d\udcda"},"get_data":[]}
+2025-10-15 22:56:55 - Admin AJAX Request - Context: {"action":"get_chart_data","method":"GET","post_data":[],"get_data":{"action":"get_chart_data"}}
+2025-10-15 22:56:55 - Admin AJAX Request - Context: {"action":"create_lesson","method":"POST","post_data":{"action":"create_lesson","title":"Test Lesson 1760561815316","short_desc":"This is a test lesson","long_desc":"This is a longer description of the test lesson","duration":"00:30:00","topic_id":"29","difficulty_level":"Beginner","is_private":"0","author_id":""},"get_data":[]}
+2025-10-15 22:56:55 - Creating lesson - Context: {"title":"Test Lesson 1760561815316","duration":"00:30:00","author_id":null}
+2025-10-15 22:56:55 - Lesson created successfully - Context: {"lesson_id":149}
+2025-10-15 22:56:56 - Admin AJAX Request - Context: {"action":"create_quiz","method":"POST","post_data":{"action":"create_quiz","title":"Test Quiz 1760561816358","lesson_id":"149","is_ai_generated":"0","author_id":""},"get_data":[]}
+2025-10-15 22:56:56 - Creating quiz - Context: {"title":"Test Quiz 1760561816358","lesson_id":"149","author_id":null}
+2025-10-15 22:56:56 - Quiz created successfully - Context: {"quiz_id":65}
+2025-10-15 22:59:44 - Admin AJAX Request - Context: {"action":"get_lesson","method":"GET","post_data":[],"get_data":{"action":"get_lesson","lesson_id":"10"}}
+2025-10-15 22:59:47 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"64"}}
+2025-10-15 23:07:28 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"22"}}
+2025-10-15 23:07:28 - Getting user - Context: {"user_id":"22"}
+2025-10-15 23:07:28 - User retrieved successfully - Context: {"user_id":"22"}
+2025-10-15 23:07:31 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"2"}}
+2025-10-15 23:07:31 - Getting user - Context: {"user_id":"2"}
+2025-10-15 23:07:31 - User retrieved successfully - Context: {"user_id":"2"}
+2025-10-15 23:07:34 - Admin AJAX Request - Context: {"action":"get_lesson","method":"GET","post_data":[],"get_data":{"action":"get_lesson","lesson_id":"149"}}
+2025-10-15 23:07:38 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"65"}}
+2025-10-15 23:07:42 - Admin AJAX Request - Context: {"action":"get_shop_item","method":"GET","post_data":[],"get_data":{"action":"get_shop_item","item_id":"2"}}
+2025-10-15 23:07:43 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 23:08:05 - Admin AJAX Request - Context: {"action":"get_topic","method":"GET","post_data":[],"get_data":{"action":"get_topic","topic_id":"2"}}
+2025-10-15 23:08:52 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"48"}}
+2025-10-15 23:08:55 - Admin AJAX Request - Context: {"action":"get_quiz","method":"GET","post_data":[],"get_data":{"action":"get_quiz","quiz_id":"65"}}
+2025-10-15 23:08:58 - Admin AJAX Request - Context: {"action":"update_quiz","method":"POST","post_data":{"quiz_id":"65","title":"Test Quiz 17605618163589","lesson_id":"149","is_ai_generated":"on","action":"update_quiz"},"get_data":[]}
+2025-10-15 23:12:17 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 23:12:20 - Admin AJAX Request - Context: {"action":"get_shop_items","method":"GET","post_data":[],"get_data":{"action":"get_shop_items"}}
+2025-10-15 23:12:25 - Admin AJAX Request - Context: {"action":"get_shop_items","method":"GET","post_data":[],"get_data":{"action":"get_shop_items"}}
+2025-10-15 23:12:27 - Admin AJAX Request - Context: {"action":"grant_item","method":"POST","post_data":{"user_id":"28","item_id":"1","action":"grant_item"},"get_data":[]}
+2025-10-15 23:12:35 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"36"}}
+2025-10-15 23:12:35 - Getting user - Context: {"user_id":"36"}
+2025-10-15 23:12:35 - User retrieved successfully - Context: {"user_id":"36"}
+2025-10-15 23:33:32 - Admin AJAX Request - Context: {"action":"get_users_table","method":"GET","post_data":[],"get_data":{"action":"get_users_table"}}
+2025-10-15 23:42:38 - Admin AJAX Request - Context: {"action":"get_users_for_dropdown","method":"GET","post_data":[],"get_data":{"action":"get_users_for_dropdown"}}
+2025-10-15 23:43:14 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"28"}}
+2025-10-15 23:43:14 - Getting user - Context: {"user_id":"28"}
+2025-10-15 23:43:14 - User retrieved successfully - Context: {"user_id":"28"}
+2025-10-15 23:43:16 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"28"}}
+2025-10-15 23:43:16 - Getting user - Context: {"user_id":"28"}
+2025-10-15 23:43:16 - User retrieved successfully - Context: {"user_id":"28"}
+2025-10-15 23:44:20 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"keyboards","page":"1","limit":"50"}}
+2025-10-15 23:44:23 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"50"}}
+2025-10-15 23:44:32 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"16","page":"1","limit":"50"}}
+2025-10-15 23:44:34 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"1","page":"1","limit":"50"}}
+2025-10-15 23:44:36 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"14","page":"1","limit":"50"}}
+2025-10-15 23:44:38 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"50"}}
+2025-10-15 23:44:51 - Admin AJAX Request - Context: {"action":"search_quizs","method":"GET","post_data":[],"get_data":{"action":"search_quizs","query":"quiz","page":"1","limit":"50"}}
+2025-10-15 23:44:55 - Admin AJAX Request - Context: {"action":"search_quizs","method":"GET","post_data":[],"get_data":{"action":"search_quizs","query":"","page":"1","limit":"50"}}
+2025-10-15 23:50:10 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:11 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:11 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:12 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:13 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:13 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:13 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:15 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:30 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:37 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:37 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:37 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:38 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:38 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:38 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:38 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:50:39 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:51:00 - Admin AJAX Request - Context: {"action":"search_creators","method":"GET","post_data":[],"get_data":{"action":"search_creators","query":"xuchi","page":"1","limit":"10"}}
+2025-10-15 23:51:00 - Invalid action requested - Context: {"action":"search_creators"}
+2025-10-15 23:51:02 - Admin AJAX Request - Context: {"action":"search_creators","method":"GET","post_data":[],"get_data":{"action":"search_creators","query":"xuch","page":"1","limit":"10"}}
+2025-10-15 23:51:02 - Invalid action requested - Context: {"action":"search_creators"}
+2025-10-15 23:51:05 - Admin AJAX Request - Context: {"action":"search_creators","method":"GET","post_data":[],"get_data":{"action":"search_creators","query":"fourth","page":"1","limit":"10"}}
+2025-10-15 23:51:05 - Invalid action requested - Context: {"action":"search_creators"}
+2025-10-15 23:51:10 - Admin AJAX Request - Context: {"action":"search_shops","method":"GET","post_data":[],"get_data":{"action":"search_shops","query":"c","page":"1","limit":"10"}}
+2025-10-15 23:51:10 - Invalid action requested - Context: {"action":"search_shops"}
+2025-10-15 23:51:13 - Admin AJAX Request - Context: {"action":"search_shops","method":"GET","post_data":[],"get_data":{"action":"search_shops","query":"chow","page":"1","limit":"10"}}
+2025-10-15 23:51:13 - Invalid action requested - Context: {"action":"search_shops"}
+2025-10-15 23:51:14 - Admin AJAX Request - Context: {"action":"search_shops","method":"GET","post_data":[],"get_data":{"action":"search_shops","query":"","page":"1","limit":"10"}}
+2025-10-15 23:51:14 - Exception caught in admin_ajax.php - Context: {"message":"Unknown column 'si.created_at' in 'ORDER BY'","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":1237,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(1237): mysqli->prepare('SELECT si.*, CO...')\n#1 {main}"}
+2025-10-15 23:51:39 - Admin AJAX Request - Context: {"action":"search_shops","method":"GET","post_data":[],"get_data":{"action":"search_shops","query":"chow","page":"1","limit":"10"}}
+2025-10-15 23:51:39 - Exception caught in admin_ajax.php - Context: {"message":"Unknown column 'si.created_at' in 'ORDER BY'","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":1237,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(1237): mysqli->prepare('SELECT si.*, CO...')\n#1 {main}"}
+2025-10-15 23:51:44 - Admin AJAX Request - Context: {"action":"search_shops","method":"GET","post_data":[],"get_data":{"action":"search_shops","query":"","page":"1","limit":"10"}}
+2025-10-15 23:51:44 - Exception caught in admin_ajax.php - Context: {"message":"Unknown column 'si.created_at' in 'ORDER BY'","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":1237,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(1237): mysqli->prepare('SELECT si.*, CO...')\n#1 {main}"}
+2025-10-15 23:52:23 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-15 23:52:24 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:52:27 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:52:27 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:52:46 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:52:48 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:52:48 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:53:35 - Admin AJAX Request - Context: {"action":"get_lesson","method":"GET","post_data":[],"get_data":{"action":"get_lesson","lesson_id":"134"}}
+2025-10-15 23:53:47 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-15 23:54:28 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-15 23:54:37 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-15 23:54:45 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-15 23:54:48 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-15 23:54:54 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:35 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"10"}}
+2025-10-16 00:00:35 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"1","limit":"10"}}
+2025-10-16 00:00:37 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:39 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:40 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:41 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:43 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:43 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:44 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:46 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:47 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-16 00:00:50 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"10"}}
+2025-10-16 00:00:50 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"1","limit":"10"}}
+2025-10-16 00:00:53 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"2","limit":"10"}}
+2025-10-16 00:01:07 - Admin AJAX Request - Context: {"action":"search_shops","method":"GET","post_data":[],"get_data":{"action":"search_shops","query":"chowder","page":"1","limit":"10"}}
+2025-10-16 00:01:07 - Exception caught in admin_ajax.php - Context: {"message":"Unknown column 'si.created_at' in 'ORDER BY'","file":"C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php","line":1337,"trace":"#0 C:\\Users\\Fourth\\Documents\\xampp\\htdocs\\GAKUMON\\admin_ajax.php(1337): mysqli->prepare('SELECT si.*, CO...')\n#1 {main}"}
+2025-10-16 00:08:02 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"10"}}
+2025-10-16 00:08:02 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"1","limit":"10"}}
+2025-10-16 00:08:05 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"2","limit":"10"}}
+2025-10-16 00:08:42 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"10"}}
+2025-10-16 00:08:42 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"1","limit":"10"}}
+2025-10-16 00:08:46 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"34"}}
+2025-10-16 00:08:46 - Getting user - Context: {"user_id":"34"}
+2025-10-16 00:08:46 - User retrieved successfully - Context: {"user_id":"34"}
+2025-10-16 00:08:49 - Admin AJAX Request - Context: {"action":"get_lesson","method":"GET","post_data":[],"get_data":{"action":"get_lesson","lesson_id":"1"}}
+2025-10-16 00:09:13 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"10"}}
+2025-10-16 00:09:13 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"1","limit":"10"}}
+2025-10-16 00:09:17 - Admin AJAX Request - Context: {"action":"get_user","method":"GET","post_data":[],"get_data":{"action":"get_user","user_id":"33"}}
+2025-10-16 00:09:17 - Getting user - Context: {"user_id":"33"}
+2025-10-16 00:09:17 - User retrieved successfully - Context: {"user_id":"33"}
+2025-10-16 00:24:18 - Admin AJAX Request - Context: {"action":"search_users","method":"GET","post_data":[],"get_data":{"action":"search_users","query":"","page":"1","limit":"10"}}
+2025-10-16 00:24:18 - Admin AJAX Request - Context: {"action":"search_lessons","method":"GET","post_data":[],"get_data":{"action":"search_lessons","query":"","page":"1","limit":"10"}}

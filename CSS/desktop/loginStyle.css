@@ -1,0 +1,290 @@
+/* Desktop CSS for login,php */
+
+@font-face {
+    font-family: 'SFpro_regular';
+    src: url('../fonts/sf-pro-text-regular.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_bold';
+    src: url('../fonts/SF-Pro-Display-Black.ttf');
+}
+
+@font-face {
+    font-family: 'SFpro_thin';
+    src: url('../fonts/SF-Pro-Display-Thin.ttf');
+}
+
+/* Transition overlay - UPDATED
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 100%);
+    z-index: 9999;
+    pointer-events: none;
+    transform: translateY(-100%);
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.overlay-slide-in {
+    transform: translateY(0%) !important;
+}
+
+.overlay-slide-out {
+    transform: translateY(-100%) !important;
+}
+
+.page-content {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.content-fade-out {
+    opacity: 0;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    position: relative; 
+}
+
+.login-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.btn-login:hover {
+    background-color: #811212;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(129, 18, 18, 0.2);
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 350px;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.row.justify-content-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    border: none !important;
+}
+
+.form-label {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 20px;
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    background-color: transparent;
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #811212;
+    box-shadow: 0 0 0 2px rgba(129, 18, 18, 1);
+    background-color: #fff;
+}
+
+.eyebtn {
+    border-radius: 15px;
+    padding: 0px 20px;
+    border: #811212 !important;
+    background-color: #811212 !important;
+    color: white;
+    transition: all 0.5s ease;
+}
+
+.eyebtn:active {
+    padding: 0px 10px;
+}
+
+#lengthReq, #caseReq {
+    display: block;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    transform-origin: center;
+}
+
+#passwordMatch {
+    display: block;
+    height: 24px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    transform-origin: center;
+}
+
+.text-success {
+    color: transparent !important;
+    opacity: 0;
+    transform: scale(0.8) translateY(-8px);
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.text-danger {
+    color: #811212 !important;
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    height: auto;
+}
+
+.form-group {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.requirement {
+    height: 0px !important;
+}
+
+.form-text {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 12px;
+}
+
+
+/* Disable Built-in Eye */
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-caps-lock-indicator,
+input[type="password"]::-webkit-credentials-auto-fill-button:hover {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* For Firefox */
+input[type="password"]::-webkit-reveal-password {
+  display: none;
+}
+
+/* Standard way to hide the toggle (for newer browsers) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.8rem;
+}
+
+.btnSubmit {
+    width: 30rem !important;
+    max-width: 90%;
+    border-radius: 100px;
+    font-family: 'SFpro_bold', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #811212 0%, #4C0707 30%, #811212 70%, #4C0707 100%);
+    background-size: 200% 200%;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btnSubmit:hover {
+    animation: gradientShift 3s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 18, 18, 0.4);
+}
+
+.btnSubmit::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btnSubmit:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease-in-out;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Shine animation - plays once on hover */
+@keyframes shine {
+    0% {
+        left: -50%;
+        top: -50%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
+
+.signupNote {
+    font-family: 'SFpro_regular', sans-serif;
+    font-size: 14px;
+    margin-top: 5px !important;
+}
+
+.text-link {
+    color: #811212;
+    text-decoration: none !important;
+    font-weight: bold;
+}

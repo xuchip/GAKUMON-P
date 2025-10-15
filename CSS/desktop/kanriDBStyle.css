@@ -1,0 +1,803 @@
+/* ===== FONT IMPORTS ===== */
+@font-face {
+	font-family: "SFpro_regular";
+	src: url("../fonts/sf-pro-text-regular.ttf");
+}
+
+@font-face {
+	font-family: "SFpro_bold";
+	src: url("../fonts/SF-Pro-Display-Black.ttf");
+}
+
+@font-face {
+	font-family: "SFpro_thin";
+	src: url("../fonts/SF-Pro-Display-Thin.ttf");
+}
+
+/* ===== RESET & BASE STYLES ===== */
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+	--bs-gutter-x: 0;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	overflow-x: hidden;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	background-color: #fff !important;
+}
+
+/* Make sure the body/html uses the main scrollbar */
+html,
+body {
+	overflow: auto;
+	height: 100%;
+}
+
+/* ===== THREE-COLUMN LAYOUT ===== */
+.main-layout {
+	display: flex;
+	width: 100%;
+	min-height: 100vh;
+}
+
+/* Left Navigation Column */
+.side-navbar {
+	background-color: #811212;
+	width: 500px;
+	height: 100vh;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+	z-index: 1000;
+	position: fixed;
+	left: 0;
+	top: 0;
+	overflow-y: auto;
+}
+
+/* ===== NAVIGATION STYLES ===== */
+.nav-logo {
+	padding: 1.5rem 1rem;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.nav-logo img {
+	max-width: 95%;
+	height: auto;
+}
+
+.nav-items {
+	padding: 2rem 0;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.nav-item {
+	position: relative;
+	padding: 0.8rem 1.5rem;
+	color: white;
+	text-decoration: none;
+	display: flex;
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 25px;
+	text-transform: uppercase;
+	align-items: center;
+	transition: all 0.3s ease;
+	border-left: 4px solid transparent;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.nav-item .bi {
+	order: -1;
+	margin-right: 15px;
+	transition: all 0.3s ease;
+	font-size: 1.5rem;
+	z-index: 2;
+	position: relative;
+}
+
+.nav-item::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 80%;
+	height: 100%;
+	background: white;
+	transform: translateX(-100%);
+	transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	z-index: 1;
+	border-radius: 0 15px 15px 0;
+}
+
+.nav-item:hover::before {
+	transform: translateX(0);
+}
+
+.nav-item:hover .nav-text,
+.nav-item:hover .bi {
+	color: #811212;
+}
+
+.nav-item.active {
+	background-color: transparent;
+	border-left: 4px solid #fff;
+}
+
+.nav-item.active::before {
+	transform: translateX(0);
+	background: white;
+}
+
+.nav-item.active .nav-text,
+.nav-item.active .bi {
+	color: #811212;
+}
+
+.nav-item:hover .bi {
+	transform: translateX(3px);
+}
+
+.nav-text {
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	transition: color 0.3s ease;
+	z-index: 2;
+	position: relative;
+}
+
+/* ===== ACCOUNT SECTION ===== */
+.account-section {
+	padding: 1rem;
+	text-align: right;
+	position: relative;
+}
+
+.account-btn {
+	color: white;
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	transition: transform 0.3s ease;
+	cursor: pointer;
+}
+
+.account-btn:hover {
+	transform: scale(1.1);
+}
+
+.account {
+	font-size: 2rem;
+}
+
+.account-dropdown {
+	position: absolute;
+	bottom: 100%;
+	right: 10px;
+	width: 180px;
+	margin-right: 10px;
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
+	z-index: 1001;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(10px);
+	transition: all 0.3s ease;
+	font-family: "SFpro_regular", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.account-dropdown.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.dropdown-user-info {
+	padding: 15px;
+	border-bottom: 1px solid #eee;
+}
+
+.dropdown-email {
+	color: #333;
+	font-weight: 500;
+	font-family: "SFpro_regular", sans-serif;
+	font-size: 12px;
+}
+
+.dropdown-username {
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 20px !important;
+}
+
+.dropdown-divider {
+	height: 1px;
+	background-color: #eee;
+	margin: 2px 0;
+}
+
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	padding: 5px 15px;
+	color: #333;
+	text-decoration: none;
+	transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+	background-color: #f5f5f5;
+}
+
+.dropdown-item i {
+	margin-right: 10px;
+	font-size: 16px;
+	color: #811212;
+}
+
+.dropdown-item span {
+	font-size: 14px;
+}
+
+.dropdown-logout {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: 5px 15px 8px !important;
+	background: none;
+	border: none;
+	color: #811212;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	font-family: "SFpro_regular", sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.dropdown-logout:hover {
+	background-color: #811212 !important;
+	color: #ffff !important;
+	border-radius: 0px 0px 13px 13px;
+}
+
+.dropdown-logout i {
+	margin-right: 10px;
+	font-size: 14px;
+}
+
+/* ===== CONTENT AREA STYLES ===== */
+.content-area {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 1;
+	margin-left: 500px;
+	min-height: 100vh;
+	background-color: #ffff;
+	overflow: auto;
+	width: calc(100% - 500px);
+}
+
+/* Page content adjustments */
+.page-content {
+	width: 100%;
+	padding: 2rem;
+	min-height: 100vh;
+}
+
+/* ===== DATA TABLE STYLES ===== */
+
+/* Main content card */
+.account-card {
+	background-color: #811212;
+	color: #fff;
+	width: 97%;
+	margin: 1.5rem auto;
+	padding: 1rem;
+	border-radius: 12px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	min-height: auto;
+}
+
+/* Card header */
+.account-card .card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.8rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	padding-bottom: 0.6rem;
+}
+
+.account-card .card-header h2 {
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 1.3rem;
+	margin: 0;
+	color: #fff;
+}
+
+/* Card body should allow content to expand */
+.card-body {
+	min-height: auto;
+	overflow: visible;
+}
+
+/* Table container */
+.account-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.8rem;
+	background: transparent;
+	color: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	font-family: "SFpro_regular", sans-serif;
+	table-layout: auto;
+}
+
+/* Table header */
+.account-table thead {
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+.account-table th {
+	text-align: left;
+	padding: 0.5rem 0.6rem;
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+	color: #fff;
+	white-space: nowrap;
+}
+
+/* Table body rows */
+.account-table tbody tr {
+	transition: background-color 0.2s ease;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.account-table tbody tr:hover {
+	background-color: rgba(255, 255, 255, 0.08);
+}
+
+.account-table td {
+	padding: 0.5rem 0.6rem;
+	word-break: break-word;
+	color: #fff;
+	vertical-align: middle;
+}
+
+/* Fix title column to show full text */
+.account-table td:nth-child(2) {
+	white-space: normal;
+	word-break: break-word;
+	min-width: 150px;
+}
+
+/* Action buttons - CENTERED */
+.action-buttons {
+	display: flex;
+	gap: 0.4rem;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	width: 100%;
+}
+
+.action-buttons button {
+	background: #fff;
+	border: none;
+	color: #811212;
+	padding: 0.3rem 0.5rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-size: 0.8rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 28px;
+	height: 28px;
+	flex-shrink: 0;
+}
+
+.action-buttons button:hover {
+	background-color: #f0f0f0;
+	transform: scale(1.05);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* DARKER BUTTON COLORS */
+.view-btn {
+	background: #1e4d8c !important;
+	color: white !important;
+}
+
+.view-btn:hover {
+	background: #163a6f !important;
+}
+
+.edit-btn {
+	background: #2d774a !important;
+	color: white !important;
+}
+
+.edit-btn:hover {
+	background: #235c3a !important;
+}
+
+.delete-btn {
+	background: #c53030 !important;
+	color: white !important;
+}
+
+.delete-btn:hover {
+	background: #9b2c2c !important;
+}
+
+.approve-btn {
+	background: #2d774a !important;
+	color: white !important;
+}
+
+.approve-btn:hover {
+	background: #235c3a !important;
+}
+
+.reject-btn {
+	background: #c53030 !important;
+	color: white !important;
+}
+
+.reject-btn:hover {
+	background: #9b2c2c !important;
+}
+
+.toggle-btn {
+	background: #c05621 !important;
+	color: white !important;
+}
+
+.toggle-btn:hover {
+	background: #9c4221 !important;
+}
+
+.toggle-btn.make-public {
+	background: #2d774a !important;
+}
+
+.toggle-btn.make-public:hover {
+	background: #235c3a !important;
+}
+
+/* Status badges */
+.status-badge {
+	padding: 0.2rem 0.5rem;
+	border-radius: 8px;
+	font-size: 0.7rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-family: "SFpro_bold", sans-serif;
+	display: inline-block;
+	text-align: center;
+	min-width: 60px;
+}
+
+.status-pending {
+	background-color: #c05621;
+	color: white;
+}
+
+.status-approved {
+	background-color: #2d774a;
+	color: white;
+}
+
+.status-rejected {
+	background-color: #c53030;
+	color: white;
+}
+
+.status-public {
+	background-color: #2d774a;
+	color: white;
+}
+
+.status-private {
+	background-color: #c05621;
+	color: white;
+}
+
+/* Category badges */
+.category-badge {
+	padding: 0.2rem 0.5rem;
+	border-radius: 8px;
+	font-size: 0.7rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-family: "SFpro_bold", sans-serif;
+	display: inline-block;
+	text-align: center;
+	min-width: 70px;
+}
+
+.category-food {
+	background-color: #2d774a;
+	color: white;
+}
+
+.category-accessory {
+	background-color: #1e4d8c;
+	color: white;
+}
+
+.category-wallpaper {
+	background-color: #6b46c1;
+	color: white;
+}
+
+/* File links */
+.file-link {
+	color: #fff;
+	text-decoration: none;
+	transition: color 0.2s ease;
+	font-family: "SFpro_regular", sans-serif;
+	font-size: 0.8rem;
+}
+
+.file-link:hover {
+	color: #f0f0f0;
+	text-decoration: underline;
+}
+
+/* ========== ACTIVITY LOGS DASHBOARD ========== */
+.activity-logs-dashboard {
+	padding: 0px 20px 20px;
+	color: #811212;
+	min-height: auto;
+}
+
+.activity-logs-title {
+	color: #811212;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	padding-bottom: 10px;
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 50px;
+	text-transform: uppercase;
+}
+
+.activity-stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 15px;
+	margin-bottom: 20px;
+}
+
+.activity-stat-card {
+	background-color: #811212;
+	border-radius: 15px;
+	border: solid 10px #ffff;
+	padding: 15px;
+	box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+	transition: all 0.3s ease;
+	position: relative;
+	border-radius: 10px;
+	transition: transform 0.3s ease;
+	align-items: center;
+	text-align: center;
+}
+
+.activity-stat-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.activity-stat-content h3 {
+	font-size: 50px;
+	margin: 10px 0 10px 0;
+	color: #fff;
+	font-family: "SFpro_bold", sans-serif;
+}
+
+.activity-stat-content p {
+	font-size: 16px;
+	color: #fff;
+	line-height: 1;
+	font-family: "SFpro_regular", sans-serif;
+}
+
+.recent-activity-section {
+	padding: 15px;
+	background-color: #811212;
+	border-radius: 15px;
+	border: solid 10px #ffff;
+	margin-top: 20px;
+}
+
+.recent-activity-section h3 {
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-size: 25px;
+	color: #fff;
+	font-family: "SFpro_bold", sans-serif;
+	text-transform: uppercase;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	padding-bottom: 10px;
+}
+
+/* Activity table specific styles */
+.recent-activity-section .account-table {
+	background: transparent;
+	color: #fff;
+}
+
+.recent-activity-section .account-table th {
+	background-color: rgba(255, 255, 255, 0.15);
+	color: #fff;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+	font-family: "SFpro_bold", sans-serif;
+	font-size: 0.9rem;
+	text-transform: uppercase;
+}
+
+.recent-activity-section .account-table td {
+	color: #fff;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+	font-family: "SFpro_regular", sans-serif;
+}
+
+.recent-activity-section .account-table tbody tr:hover {
+	background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Activity metrics section */
+.activity-metrics {
+	padding: 15px;
+	background-color: #811212;
+	border-radius: 15px;
+	border: solid 10px #ffff;
+	margin-top: 20px;
+}
+
+.activity-metrics h5 {
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-size: 25px;
+	color: #fff;
+	font-family: "SFpro_bold", sans-serif;
+	text-transform: uppercase;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	padding-bottom: 10px;
+}
+
+.metric-bar {
+	margin-bottom: 15px;
+}
+
+.metric-label {
+	font-size: 14px;
+	color: #fff;
+	text-transform: uppercase;
+	font-family: "SFpro_regular", sans-serif;
+	display: block;
+	margin-bottom: 5px;
+}
+
+.progress {
+	height: 20px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.progress-bar {
+	height: 100%;
+	background: linear-gradient(135deg, #811212 0%, #4c0707 100%);
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	font-weight: 600;
+	color: #fff;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-family: "SFpro_regular", sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+	.account-card {
+		width: 99%;
+		margin: 1rem auto;
+		padding: 0.8rem;
+	}
+
+	.account-table {
+		font-size: 0.75rem;
+	}
+
+	.account-table th,
+	.account-table td {
+		padding: 0.4rem 0.5rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.page-content {
+		padding: 1rem;
+	}
+
+	.account-table thead {
+		display: none;
+	}
+
+	.account-table,
+	.account-table tbody,
+	.account-table tr,
+	.account-table td {
+		display: block;
+		width: 100%;
+	}
+
+	.account-table tr {
+		margin-bottom: 0.8rem;
+		background-color: rgba(255, 255, 255, 0.1);
+		border-radius: 8px;
+		padding: 0.5rem;
+	}
+
+	.account-table td {
+		text-align: right;
+		position: relative;
+		padding-left: 45%;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+		white-space: normal;
+		text-overflow: clip;
+	}
+
+	.account-table td::before {
+		content: attr(data-label);
+		position: absolute;
+		left: 0.8rem;
+		width: 40%;
+		text-align: left;
+		font-weight: bold;
+		text-transform: uppercase;
+		font-size: 0.7rem;
+		color: #f0f0f0;
+		font-family: "SFpro_bold", sans-serif;
+	}
+
+	.action-buttons {
+		justify-content: flex-end;
+	}
+
+	.account-table td:nth-child(2) {
+		min-width: auto;
+	}
+}
